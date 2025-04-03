@@ -2,3 +2,13 @@
 *.kicad_prl
 *.lck
 *-backups/
+*.bak
+fp-info-cache
+*#auto_saved_files#
+*.ihx
+*.o
+*.map
+*.sym
+*.lis
+*.hex
+*.bin
