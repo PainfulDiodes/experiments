@@ -1,5 +1,5 @@
 # Beanboard SPI RA8875 TFT Experiment
 
-Experiment code for blog post:
+The main sample code is here: https://github.com/PainfulDiodes/experiments/tree/main/beanboard-spi-ra8875-tft/z80/asm/beanboard_RA8875
 
-https://painfuldiodes.wordpress.com/2025/10/24/tft-display-for-z80-homebrew/
+Accompanying blog post: https://painfuldiodes.wordpress.com/2025/10/24/tft-display-for-z80-homebrew/
