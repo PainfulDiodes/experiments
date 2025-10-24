@@ -1,0 +1,326 @@
+beanboard.asm:
+     1                          include "../../lib/beanboard.map"
+../../lib/beanboard.map:
+     1                          BAD_CMD_MSG                     = $03ED ; addr, local, , beanboard, , asm/messages_small.asm:7
+     2                          BEANBOARD                       = $0001 ; const, local, , beanboard, , beanboard.asm:5
+     3                          CMD_BUFFER                      = $F020 ; const, local, , beanboard, , asm/main.inc:9
+     4                          CMD_W_NULL_MSG                  = $03FA ; addr, local, , beanboard, , asm/messages_small.asm:10
+     5                          CONSOLE_STATUS                  = $F000 ; const, local, , beanboard, , asm/main.inc:5
+     6                          CONSOLE_STATUS_BEANBOARD        = $0002 ; const, local, , beanboard, , asm/main.inc:23
+     7                          CONSOLE_STATUS_USB              = $0001 ; const, local, , beanboard, , asm/main.inc:22
+     8                          DEBOUNCE_DELAY                  = $4000 ; const, local, , beanboard, , asm/keymatrix.asm:1
+     9                          ESC_B                           = $0008 ; const, local, , beanboard, , asm/escapestring.inc:5
+    10                          ESC_E                           = $001B ; const, local, , beanboard, , asm/escapestring.inc:9
+    11                          ESC_N                           = $000A ; const, local, , beanboard, , asm/escapestring.inc:7
+    12                          ESC_R                           = $000D ; const, local, , beanboard, , asm/escapestring.inc:8
+    13                          ESC_T                           = $0009 ; const, local, , beanboard, , asm/escapestring.inc:6
+    14                          KEYSCAN_IN                      = $0003 ; const, local, , beanboard, , asm/main.inc:16
+    15                          KEYSCAN_OUT                     = $0002 ; const, local, , beanboard, , asm/main.inc:15
+    16                          KEY_MATRIX_BUFFER               = $F010 ; const, local, , beanboard, , asm/main.inc:7
+    17                          LCD_BLINK_ON                    = $0001 ; const, local, , beanboard, , asm/HD44780LCD.inc:22
+    18                          LCD_CLEAR_DISPLAY               = $0001 ; const, local, , beanboard, , asm/HD44780LCD.inc:2
+    19                          LCD_CTRL                        = $0004 ; const, local, , beanboard, , asm/main.inc:17
+    20                          LCD_CURSOR_ON                   = $0002 ; const, local, , beanboard, , asm/HD44780LCD.inc:20
+    21                          LCD_DATA                        = $0005 ; const, local, , beanboard, , asm/main.inc:18
+    22                          LCD_DATA_LEN_8                  = $0010 ; const, local, , beanboard, , asm/HD44780LCD.inc:32
+    23                          LCD_DISPLAY_ON                  = $0004 ; const, local, , beanboard, , asm/HD44780LCD.inc:18
+    24                          LCD_DISPLAY_ON_OFF_CONTROL      = $0008 ; const, local, , beanboard, , asm/HD44780LCD.inc:5
+    25                          LCD_DISP_LINES_2                = $0008 ; const, local, , beanboard, , asm/HD44780LCD.inc:34
+    26                          LCD_EOL_3                       = $0067 ; const, local, , beanboard, , asm/HD44780LCD.inc:51
+    27                          LCD_FONT_8                      = $0000 ; const, local, , beanboard, , asm/HD44780LCD.inc:37
+    28                          LCD_FUNCTION_SET                = $0020 ; const, local, , beanboard, , asm/HD44780LCD.inc:7
+    29                          LCD_LINE_0_ADDR                 = $0000 ; const, local, , beanboard, , asm/HD44780LCD.inc:44
+    30                          LCD_LINE_1_ADDR                 = $0040 ; const, local, , beanboard, , asm/HD44780LCD.inc:45
+    31                          LCD_LINE_2_ADDR                 = $0014 ; const, local, , beanboard, , asm/HD44780LCD.inc:46
+    32                          LCD_LINE_3_ADDR                 = $0054 ; const, local, , beanboard, , asm/HD44780LCD.inc:47
+    33                          LCD_LINE_LEN                    = $0014 ; const, local, , beanboard, , asm/HD44780LCD.inc:39
+    34                          LCD_NUM_LINES                   = $0004 ; const, local, , beanboard, , asm/HD44780LCD.inc:40
+    35                          LCD_SET_DDRAM_ADDR              = $0080 ; const, local, , beanboard, , asm/HD44780LCD.inc:9
+    36                          MARVIN                          = $00C6 ; addr, local, , beanboard, , asm/marvin.asm:9
+    37                          MARVINORG                       = $0000 ; const, local, , beanboard, , beanboard.asm:0
+    38                          MOD_KEY_SHIFT                   = $0001 ; const, local, , beanboard, , asm/keymatrix.asm:3
+    39                          PROMPT                          = $00CF ; addr, local, , beanboard, , asm/marvin.asm:16
+    40                          QUOTE                           = $0027 ; const, local, , beanboard, , asm/escapestring.inc:11
+    41                          QWERTY_ALT                      = $0000 ; const, local, , beanboard, , asm/keymatrix.asm:151
+    42                          QWERTY_CAPS                     = $0005 ; const, local, , beanboard, , asm/keymatrix.asm:157
+    43                          QWERTY_CMD                      = $0000 ; const, local, , beanboard, , asm/keymatrix.asm:152
+    44                          QWERTY_CTRL                     = $0000 ; const, local, , beanboard, , asm/keymatrix.asm:150
+    45                          QWERTY_CURS_DOWN                = $0002 ; const, local, , beanboard, , asm/keymatrix.asm:154
+    46                          QWERTY_CURS_LEFT                = $0003 ; const, local, , beanboard, , asm/keymatrix.asm:155
+    47                          QWERTY_CURS_RIGHT               = $0004 ; const, local, , beanboard, , asm/keymatrix.asm:156
+    48                          QWERTY_CURS_UP                  = $0001 ; const, local, , beanboard, , asm/keymatrix.asm:153
+    49                          QWERTY_FN                       = $0000 ; const, local, , beanboard, , asm/keymatrix.asm:149
+    50                          QWERTY_KEYMAP_L                 = $0344 ; addr, local, , beanboard, , asm/keymatrix.asm:159
+    51                          QWERTY_KEYMAP_U                 = $0384 ; addr, local, , beanboard, , asm/keymatrix.asm:164
+    52                          QWERTY_SHIFT                    = $0000 ; const, local, , beanboard, , asm/keymatrix.asm:148
+    53                          RAMSTART                        = $8000 ; const, local, , beanboard, , asm/main.inc:2
+    54                          SLASH                           = $005C ; const, local, , beanboard, , asm/escapestring.inc:10
+    55                          STACK                           = $FFFF ; const, local, , beanboard, , asm/main.inc:11
+    56                          UM245R_CTRL                     = $0000 ; const, local, , beanboard, , asm/main.inc:13
+    57                          UM245R_DATA                     = $0001 ; const, local, , beanboard, , asm/main.inc:14
+    58                          WARMSTART2                      = $0020 ; addr, local, , beanboard, , asm/main.asm:11
+    59                          WARMSTART                       = $0010 ; addr, local, , beanboard, , asm/main.asm:8
+    60                          WELCOME_MSG                     = $03C4 ; addr, local, , beanboard, , asm/messages_small.asm:1
+    61                          __head                          = $0000 ; const, public, def, , ,
+    62                          __size                          = $0403 ; const, public, def, , ,
+    63                          __tail                          = $0403 ; const, public, def, , ,
+    64                          _beanboard_console_init_usb     = $0083 ; addr, local, , beanboard, , asm/console.asm:106
+    65                          _cmd_exec_df                    = $018D ; addr, local, , beanboard, , asm/marvin.asm:207
+    66                          _cmd_execute                    = $017C ; addr, local, , beanboard, , asm/marvin.asm:188
+    67                          _cmd_load                       = $0191 ; addr, local, , beanboard, , asm/marvin.asm:215
+    68                          _cmd_load_data                  = $01B0 ; addr, local, , beanboard, , asm/marvin.asm:243
+    69                          _cmd_load_end                   = $01BD ; addr, local, , beanboard, , asm/marvin.asm:262
+    70                          _cmd_read                       = $0121 ; addr, local, , beanboard, , asm/marvin.asm:95
+    71                          _cmd_read_byte                  = $0142 ; addr, local, , beanboard, , asm/marvin.asm:124
+    72                          _cmd_read_row                   = $012E ; addr, local, , beanboard, , asm/marvin.asm:110
+    73                          _cmd_write                      = $0157 ; addr, local, , beanboard, , asm/marvin.asm:147
+    74                          _cmd_write_data                 = $0164 ; addr, local, , beanboard, , asm/marvin.asm:162
+    75                          _cmd_write_end                  = $0170 ; addr, local, , beanboard, , asm/marvin.asm:176
+    76                          _cmd_write_null                 = $0173 ; addr, local, , beanboard, , asm/marvin.asm:179
+    77                          _colscan                        = $032F ; addr, local, , beanboard, , asm/keymatrix.asm:114
+    78                          _colscanend                     = $0342 ; addr, local, , beanboard, , asm/keymatrix.asm:141
+    79                          _colscanloop                    = $0333 ; addr, local, , beanboard, , asm/keymatrix.asm:121
+    80                          _colscanloopnext                = $033C ; addr, local, , beanboard, , asm/keymatrix.asm:132
+    81                          _debounce_delay                 = $0303 ; addr, local, , beanboard, , asm/keymatrix.asm:51
+    82                          _delay_end                      = $030F ; addr, local, , beanboard, , asm/keymatrix.asm:61
+    83                          _delay_loop                     = $0308 ; addr, local, , beanboard, , asm/keymatrix.asm:55
+    84                          _do_usb_put                     = $00A6 ; addr, local, , beanboard, , asm/UM245R.asm:44
+    85                          _get_cmd                        = $00D7 ; addr, local, , beanboard, , asm/marvin.asm:22
+    86                          _get_cmd_end                    = $00FC ; addr, local, , beanboard, , asm/marvin.asm:60
+    87                          _get_cmd_esc                    = $00F5 ; addr, local, , beanboard, , asm/marvin.asm:54
+    88                          _hex_byte_val_zero              = $01DF ; addr, local, , beanboard, , asm/strings.asm:40
+    89                          _hex_val_n                      = $01F1 ; addr, local, , beanboard, , asm/strings.asm:64
+    90                          _hex_val_u_n                    = $01EA ; addr, local, , beanboard, , asm/strings.asm:56
+    91                          _keyscanloop                    = $02EA ; addr, local, , beanboard, , asm/keymatrix.asm:27
+    92                          _lcd_putchar_end                = $026C ; addr, local, , beanboard, , asm/HD44780LCD.asm:75
+    93                          _lcd_putchar_eol3               = $0264 ; addr, local, , beanboard, , asm/HD44780LCD.asm:69
+    94                          _lcd_putchar_pad                = $024D ; addr, local, , beanboard, , asm/HD44780LCD.asm:56
+    95                          _lcd_putchar_printable          = $0259 ; addr, local, , beanboard, , asm/HD44780LCD.asm:63
+    96                          _lcd_putcmd_loop                = $0234 ; addr, local, , beanboard, , asm/HD44780LCD.asm:24
+    97                          _lcd_putdata                    = $026D ; addr, local, , beanboard, , asm/HD44780LCD.asm:80
+    98                          _lcd_putdata_loop               = $026F ; addr, local, , beanboard, , asm/HD44780LCD.asm:84
+    99                          _lcd_puts_end                   = $02D0 ; addr, local, , beanboard, , asm/HD44780LCD.asm:175
+   100                          _lcd_puts_loop                  = $02C4 ; addr, local, , beanboard, , asm/HD44780LCD.asm:162
+   101                          _lcd_scroll_clear_line          = $02B6 ; addr, local, , beanboard, , asm/HD44780LCD.asm:148
+   102                          _lcd_scroll_clear_line_loop     = $02BB ; addr, local, , beanboard, , asm/HD44780LCD.asm:153
+   103                          _lcd_scroll_line                = $029D ; addr, local, , beanboard, , asm/HD44780LCD.asm:119
+   104                          _lcd_scroll_line_loop           = $029F ; addr, local, , beanboard, , asm/HD44780LCD.asm:125
+   105                          _modifier_shift                 = $032C ; addr, local, , beanboard, , asm/keymatrix.asm:107
+   106                          _putchar_beanboard              = $0057 ; addr, local, , beanboard, , asm/console.asm:49
+   107                          _putchar_end                    = $0061 ; addr, local, , beanboard, , asm/console.asm:56
+   108                          _putchar_hex_dgt                = $020B ; addr, local, , beanboard, , asm/strings.asm:91
+   109                          _putchar_hex_n                  = $0215 ; addr, local, , beanboard, , asm/strings.asm:101
+   110                          _putchar_usb                    = $005D ; addr, local, , beanboard, , asm/console.asm:53
+   111                          _puts_end                       = $0072 ; addr, local, , beanboard, , asm/console.asm:88
+   112                          _puts_loop                      = $0066 ; addr, local, , beanboard, , asm/console.asm:75
+   113                          _readchar_beanboard             = $003B ; addr, local, , beanboard, , asm/console.asm:20
+   114                          _readchar_end                   = $0043 ; addr, local, , beanboard, , asm/console.asm:25
+   115                          _readchar_usb                   = $0040 ; addr, local, , beanboard, , asm/console.asm:23
+   116                          _rowscan                        = $0312 ; addr, local, , beanboard, , asm/keymatrix.asm:71
+   117                          _usb_no_char                    = $0098 ; addr, local, , beanboard, , asm/UM245R.asm:32
+   118                          _usb_put                        = $00AA ; addr, local, , beanboard, , asm/UM245R.asm:49
+   119                          _usb_put_loop                   = $00AC ; addr, local, , beanboard, , asm/UM245R.asm:53
+   120                          _usb_puts_end                   = $00C4 ; addr, local, , beanboard, , asm/UM245R.asm:83
+   121                          _usb_puts_loop                  = $00B8 ; addr, local, , beanboard, , asm/UM245R.asm:70
+   122                          beanboard_console_init          = $0074 ; addr, local, , beanboard, , asm/console.asm:94
+   123                          getchar                         = $0023 ; addr, local, , beanboard, , asm/console.asm:2
+   124                          hex_byte_val                    = $01C0 ; addr, local, , beanboard, , asm/strings.asm:4
+   125                          hex_val                         = $01E3 ; addr, local, , beanboard, , asm/strings.asm:48
+   126                          key_readchar                    = $02D2 ; addr, local, , beanboard, , asm/keymatrix.asm:10
+   127                          key_readchar_end                = $02FC ; addr, local, , beanboard, , asm/keymatrix.asm:43
+   128                          lcd_getchar                     = $023F ; addr, local, , beanboard, , asm/HD44780LCD.asm:39
+   129                          lcd_init                        = $021B ; addr, local, , beanboard, , asm/HD44780LCD.asm:2
+   130                          lcd_putchar                     = $0248 ; addr, local, , beanboard, , asm/HD44780LCD.asm:51
+   131                          lcd_putcmd                      = $0232 ; addr, local, , beanboard, , asm/HD44780LCD.asm:20
+   132                          lcd_puts                        = $02C3 ; addr, local, , beanboard, , asm/HD44780LCD.asm:160
+   133                          lcd_scroll                      = $027E ; addr, local, , beanboard, , asm/HD44780LCD.asm:102
+   134                          modifierkeys                    = $031F ; addr, local, , beanboard, , asm/keymatrix.asm:95
+   135                          putchar                         = $0045 ; addr, local, , beanboard, , asm/console.asm:37
+   136                          putchar_hex                     = $01F4 ; addr, local, , beanboard, , asm/strings.asm:70
+   137                          puts                            = $0065 ; addr, local, , beanboard, , asm/console.asm:73
+   138                          readchar                        = $002B ; addr, local, , beanboard, , asm/console.asm:10
+   139                          usb_putchar                     = $009B ; addr, local, , beanboard, , asm/UM245R.asm:36
+   140                          usb_puts                        = $00B7 ; addr, local, , beanboard, , asm/UM245R.asm:68
+   141                          usb_readchar                    = $008A ; addr, local, , beanboard, , asm/UM245R.asm:16
+   142                          
+beanboard.asm:
+     2                          include "../../lib/extra.map"
+../../lib/extra.map:
+     1                          GPIO_OUT    equ 6 ; either 6 or 7 will work
+     2                          GPIO_IN     equ 7 ; either 6 or 7 will work
+     3                          
+beanboard.asm:
+     3                          ORG ORGDEF
+     4                          include "main.asm"
+main.asm:
+     1                          RA8875_DATAWRITE equ 0x00
+     2                          RA8875_DATAREAD equ 0x40
+     3                          RA8875_CMDWRITE equ 0x80
+     4                          RA8875_CMDREAD equ 0xC0
+     5                          
+     6                          start:
+     7  0000  cd6500                call spi_reset
+     8  0003  214000                ld hl,message
+     9  0006  cd6500                call puts
+    10  0009  cd2300                call getchar
+    11  000c  cd6a00                call spi_init
+    12                          
+    13                          send_loop:
+    14  000f  cd2300                call getchar
+    15  0012  fe1b                  cp '\e'
+    16  0014  ca3d00                jp z,done
+    17  0017  cd4500                call putchar
+    18  001a  f5                    push af
+    19  001b  3e20                  ld a, ' '
+    20  001d  cd4500                call putchar
+    21  0020  cd6f00                call spi_select
+    22  0023  f1                    pop af
+    23  0024  cd7900                call spi_write
+    24  0027  cd7400                call spi_deselect
+    25  002a  cd6f00                call spi_select
+    26  002d  cd9100                call spi_read
+    27  0030  cdf401                call putchar_hex
+    28  0033  cd7400                call spi_deselect
+    29  0036  3e0a                  ld a,'\n'
+    30  0038  cd4500                call putchar
+    31  003b  18d2                  jr send_loop
+    32                          done:
+    33  003d  c31000                jp WARMSTART
+    34                          
+    35                          message:
+    36  0040  5350492074657374      db "SPI test\nHit any key to continue...\n",0
+              0a48697420616e79  
+              206b657920746f20  
+              636f6e74696e7565  
+              2e2e2e0a00        
+    37                          
+beanboard.asm:
+     5                          include "spi.asm"
+spi.asm:
+     1                          ; Pin definitions for SPI on GPIO port
+     2                          
+     3                          ; GPO
+     4                          ; Serial Clock
+     5                          SPI_SCK        equ 0
+     6                          ; Master Out Slave In
+     7                          SPI_MOSI       equ 1
+     8                          ; RA8875 RESET - active LOW
+     9                          RA8875_RESET   equ 2
+    10                          ; Chip Select - active LOW
+    11                          SPI_CS         equ 3
+    12                          
+    13                          ; GPI
+    14                          ; WAIT
+    15                          RA8875_WAIT    equ 0
+    16                          ; Master In Slave Out
+    17                          SPI_MISO       equ 1
+    18                          
+    19                          GPO_RESET_STATE equ 1 << SPI_CS
+    20                          GPO_INIT_STATE equ 1 << SPI_CS | 1 << RA8875_RESET
+    21                          GPO_SELECT_STATE equ 1 << RA8875_RESET
+    22                          GPO_LOW_STATE equ 1 << RA8875_RESET
+    23                          GPO_HIGH_STATE equ 1 << SPI_MOSI | 1 << RA8875_RESET
+    24                          
+    25                          ; Reset state
+    26                          ; Destroys: AF
+    27                          spi_reset:
+    28                              ; Set initial pin states (RESET high, CS high, CLK low, MOSI low)
+    29  0065  3e08                  ld a,GPO_RESET_STATE
+    30  0067  d306                  out (GPIO_OUT),a
+    31  0069  c9                    ret
+    32                          
+    33                          ; Initial state
+    34                          ; Prepare GPIO pins for SPI operation
+    35                          ; Destroys: AF
+    36                          spi_init:
+    37                              ; Set initial pin states (RESET high, CS high, CLK low, MOSI low)
+    38  006a  3e0c                  ld a,GPO_INIT_STATE
+    39  006c  d306                  out (GPIO_OUT),a
+    40  006e  c9                    ret
+    41                          
+    42                          ; Select SPI device (CS low)
+    43                          ; Destroys: AF
+    44                          spi_select:
+    45                              ; CS low
+    46  006f  3e04                  ld a,GPO_SELECT_STATE
+    47  0071  d306                  out (GPIO_OUT),a
+    48  0073  c9                    ret
+    49                          
+    50                          ; Deselect SPI device (CS high)
+    51                          ; Destroys: AF
+    52                          spi_deselect:
+    53                              ; CS high
+    54  0074  3e0c                  ld a,GPO_INIT_STATE
+    55  0076  d306                  out (GPIO_OUT),a
+    56  0078  c9                    ret
+    57                          
+    58                          ; Write a byte over SPI (no readback)
+    59                          ; Input: A = byte to send
+    60                          ; Destroys: AF, B
+    61                          spi_write:
+    62  0079  0608                  ld b,8
+    63                          spi_write_bit:
+    64                              ; MSB into carry flag
+    65  007b  07                    rlca
+    66                              ; stash A
+    67  007c  57                    ld d,a
+    68                              ; default to MOSI low
+    69  007d  3e04                  ld a,GPO_LOW_STATE
+    70  007f  3002                  jr nc,spi_write_mosi
+    71  0081  3e06                  ld a,GPO_HIGH_STATE
+    72                          spi_write_mosi:
+    73  0083  d306                  out (GPIO_OUT),a
+    74                              ; clock high
+    75  0085  f601                  or 1 << SPI_SCK
+    76  0087  d306                  out (GPIO_OUT),a
+    77                              ; clock low
+    78  0089  e6fe                  and ~(1 << SPI_SCK)
+    79  008b  d306                  out (GPIO_OUT),a
+    80                              ; restore A
+    81  008d  7a                    ld a,d
+    82  008e  10eb                  djnz spi_write_bit
+    83  0090  c9                    ret
+    84                          
+    85                          ; Read a byte over SPI (receive from MISO)
+    86                          ; Sends a dummy byte (0x00) during the read
+    87                          ; Output: A = byte received
+    88                          ; Destroys: AF, B
+    89                          spi_read:
+    90                              ; Initialize bit counter and received byte
+    91  0091  0608                  ld b,8
+    92  0093  3e00                  ld a,0
+    93                          spi_read_bit:
+    94                              ; Shift received bits left
+    95  0095  cb27                  sla a
+    96                              ; stash A
+    97  0097  57                    ld d,a
+    98                              ; Set initial low state
+    99  0098  3e04                  ld a,GPO_LOW_STATE
+   100  009a  d306                  out (GPIO_OUT),a
+   101                              ; Set clock high
+   102  009c  f601                  or 1 << SPI_SCK
+   103  009e  d306                  out (GPIO_OUT),a
+   104                              ; Read MISO bit
+   105  00a0  db07                  in a,(GPIO_IN)
+   106  00a2  cb4f                  bit SPI_MISO,a
+   107  00a4  2805                  jr z,spi_read_miso_low
+   108                              ; MISO high - set LSB
+   109  00a6  7a                    ld a,d
+   110  00a7  f601                  or 1
+   111  00a9  1801                  jr spi_read_clock_low
+   112                          spi_read_miso_low:
+   113                              ; MISO low - keep LSB clear
+   114  00ab  7a                    ld a,d
+   115                          spi_read_clock_low:
+   116                              ; Set clock low
+   117  00ac  57                    ld d,a
+   118  00ad  3e04                  ld a,GPO_LOW_STATE
+   119  00af  d306                  out (GPIO_OUT),a
+   120                              ; Restore received byte
+   121  00b1  7a                    ld a,d
+   122  00b2  10e1                  djnz spi_read_bit
+   123  00b4  c9                    ret
+   124                          
+   125                          
+beanboard.asm:
+     6                          

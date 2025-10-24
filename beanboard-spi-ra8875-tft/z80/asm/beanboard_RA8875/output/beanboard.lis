@@ -1,0 +1,1265 @@
+beanboard.asm:
+     1                          include "../../lib/beanboard.map"
+../../lib/beanboard.map:
+     1                          BAD_CMD_MSG                     = $03ED ; addr, local, , beanboard, , asm/messages_small.asm:7
+     2                          BEANBOARD                       = $0001 ; const, local, , beanboard, , beanboard.asm:5
+     3                          CMD_BUFFER                      = $F020 ; const, local, , beanboard, , asm/main.inc:9
+     4                          CMD_W_NULL_MSG                  = $03FA ; addr, local, , beanboard, , asm/messages_small.asm:10
+     5                          CONSOLE_STATUS                  = $F000 ; const, local, , beanboard, , asm/main.inc:5
+     6                          CONSOLE_STATUS_BEANBOARD        = $0002 ; const, local, , beanboard, , asm/main.inc:23
+     7                          CONSOLE_STATUS_USB              = $0001 ; const, local, , beanboard, , asm/main.inc:22
+     8                          DEBOUNCE_DELAY                  = $4000 ; const, local, , beanboard, , asm/keymatrix.asm:1
+     9                          ESC_B                           = $0008 ; const, local, , beanboard, , asm/escapestring.inc:5
+    10                          ESC_E                           = $001B ; const, local, , beanboard, , asm/escapestring.inc:9
+    11                          ESC_N                           = $000A ; const, local, , beanboard, , asm/escapestring.inc:7
+    12                          ESC_R                           = $000D ; const, local, , beanboard, , asm/escapestring.inc:8
+    13                          ESC_T                           = $0009 ; const, local, , beanboard, , asm/escapestring.inc:6
+    14                          KEYSCAN_IN                      = $0003 ; const, local, , beanboard, , asm/main.inc:16
+    15                          KEYSCAN_OUT                     = $0002 ; const, local, , beanboard, , asm/main.inc:15
+    16                          KEY_MATRIX_BUFFER               = $F010 ; const, local, , beanboard, , asm/main.inc:7
+    17                          LCD_BLINK_ON                    = $0001 ; const, local, , beanboard, , asm/HD44780LCD.inc:22
+    18                          LCD_CLEAR_DISPLAY               = $0001 ; const, local, , beanboard, , asm/HD44780LCD.inc:2
+    19                          LCD_CTRL                        = $0004 ; const, local, , beanboard, , asm/main.inc:17
+    20                          LCD_CURSOR_ON                   = $0002 ; const, local, , beanboard, , asm/HD44780LCD.inc:20
+    21                          LCD_DATA                        = $0005 ; const, local, , beanboard, , asm/main.inc:18
+    22                          LCD_DATA_LEN_8                  = $0010 ; const, local, , beanboard, , asm/HD44780LCD.inc:32
+    23                          LCD_DISPLAY_ON                  = $0004 ; const, local, , beanboard, , asm/HD44780LCD.inc:18
+    24                          LCD_DISPLAY_ON_OFF_CONTROL      = $0008 ; const, local, , beanboard, , asm/HD44780LCD.inc:5
+    25                          LCD_DISP_LINES_2                = $0008 ; const, local, , beanboard, , asm/HD44780LCD.inc:34
+    26                          LCD_EOL_3                       = $0067 ; const, local, , beanboard, , asm/HD44780LCD.inc:51
+    27                          LCD_FONT_8                      = $0000 ; const, local, , beanboard, , asm/HD44780LCD.inc:37
+    28                          LCD_FUNCTION_SET                = $0020 ; const, local, , beanboard, , asm/HD44780LCD.inc:7
+    29                          LCD_LINE_0_ADDR                 = $0000 ; const, local, , beanboard, , asm/HD44780LCD.inc:44
+    30                          LCD_LINE_1_ADDR                 = $0040 ; const, local, , beanboard, , asm/HD44780LCD.inc:45
+    31                          LCD_LINE_2_ADDR                 = $0014 ; const, local, , beanboard, , asm/HD44780LCD.inc:46
+    32                          LCD_LINE_3_ADDR                 = $0054 ; const, local, , beanboard, , asm/HD44780LCD.inc:47
+    33                          LCD_LINE_LEN                    = $0014 ; const, local, , beanboard, , asm/HD44780LCD.inc:39
+    34                          LCD_NUM_LINES                   = $0004 ; const, local, , beanboard, , asm/HD44780LCD.inc:40
+    35                          LCD_SET_DDRAM_ADDR              = $0080 ; const, local, , beanboard, , asm/HD44780LCD.inc:9
+    36                          MARVIN                          = $00C6 ; addr, local, , beanboard, , asm/marvin.asm:9
+    37                          MARVINORG                       = $0000 ; const, local, , beanboard, , beanboard.asm:0
+    38                          MOD_KEY_SHIFT                   = $0001 ; const, local, , beanboard, , asm/keymatrix.asm:3
+    39                          PROMPT                          = $00CF ; addr, local, , beanboard, , asm/marvin.asm:16
+    40                          QUOTE                           = $0027 ; const, local, , beanboard, , asm/escapestring.inc:11
+    41                          QWERTY_ALT                      = $0000 ; const, local, , beanboard, , asm/keymatrix.asm:151
+    42                          QWERTY_CAPS                     = $0005 ; const, local, , beanboard, , asm/keymatrix.asm:157
+    43                          QWERTY_CMD                      = $0000 ; const, local, , beanboard, , asm/keymatrix.asm:152
+    44                          QWERTY_CTRL                     = $0000 ; const, local, , beanboard, , asm/keymatrix.asm:150
+    45                          QWERTY_CURS_DOWN                = $0002 ; const, local, , beanboard, , asm/keymatrix.asm:154
+    46                          QWERTY_CURS_LEFT                = $0003 ; const, local, , beanboard, , asm/keymatrix.asm:155
+    47                          QWERTY_CURS_RIGHT               = $0004 ; const, local, , beanboard, , asm/keymatrix.asm:156
+    48                          QWERTY_CURS_UP                  = $0001 ; const, local, , beanboard, , asm/keymatrix.asm:153
+    49                          QWERTY_FN                       = $0000 ; const, local, , beanboard, , asm/keymatrix.asm:149
+    50                          QWERTY_KEYMAP_L                 = $0344 ; addr, local, , beanboard, , asm/keymatrix.asm:159
+    51                          QWERTY_KEYMAP_U                 = $0384 ; addr, local, , beanboard, , asm/keymatrix.asm:164
+    52                          QWERTY_SHIFT                    = $0000 ; const, local, , beanboard, , asm/keymatrix.asm:148
+    53                          RAMSTART                        = $8000 ; const, local, , beanboard, , asm/main.inc:2
+    54                          SLASH                           = $005C ; const, local, , beanboard, , asm/escapestring.inc:10
+    55                          STACK                           = $FFFF ; const, local, , beanboard, , asm/main.inc:11
+    56                          UM245R_CTRL                     = $0000 ; const, local, , beanboard, , asm/main.inc:13
+    57                          UM245R_DATA                     = $0001 ; const, local, , beanboard, , asm/main.inc:14
+    58                          WARMSTART2                      = $0020 ; addr, local, , beanboard, , asm/main.asm:11
+    59                          WARMSTART                       = $0010 ; addr, local, , beanboard, , asm/main.asm:8
+    60                          WELCOME_MSG                     = $03C4 ; addr, local, , beanboard, , asm/messages_small.asm:1
+    61                          __head                          = $0000 ; const, public, def, , ,
+    62                          __size                          = $0403 ; const, public, def, , ,
+    63                          __tail                          = $0403 ; const, public, def, , ,
+    64                          _beanboard_console_init_usb     = $0083 ; addr, local, , beanboard, , asm/console.asm:106
+    65                          _cmd_exec_df                    = $018D ; addr, local, , beanboard, , asm/marvin.asm:207
+    66                          _cmd_execute                    = $017C ; addr, local, , beanboard, , asm/marvin.asm:188
+    67                          _cmd_load                       = $0191 ; addr, local, , beanboard, , asm/marvin.asm:215
+    68                          _cmd_load_data                  = $01B0 ; addr, local, , beanboard, , asm/marvin.asm:243
+    69                          _cmd_load_end                   = $01BD ; addr, local, , beanboard, , asm/marvin.asm:262
+    70                          _cmd_read                       = $0121 ; addr, local, , beanboard, , asm/marvin.asm:95
+    71                          _cmd_read_byte                  = $0142 ; addr, local, , beanboard, , asm/marvin.asm:124
+    72                          _cmd_read_row                   = $012E ; addr, local, , beanboard, , asm/marvin.asm:110
+    73                          _cmd_write                      = $0157 ; addr, local, , beanboard, , asm/marvin.asm:147
+    74                          _cmd_write_data                 = $0164 ; addr, local, , beanboard, , asm/marvin.asm:162
+    75                          _cmd_write_end                  = $0170 ; addr, local, , beanboard, , asm/marvin.asm:176
+    76                          _cmd_write_null                 = $0173 ; addr, local, , beanboard, , asm/marvin.asm:179
+    77                          _colscan                        = $032F ; addr, local, , beanboard, , asm/keymatrix.asm:114
+    78                          _colscanend                     = $0342 ; addr, local, , beanboard, , asm/keymatrix.asm:141
+    79                          _colscanloop                    = $0333 ; addr, local, , beanboard, , asm/keymatrix.asm:121
+    80                          _colscanloopnext                = $033C ; addr, local, , beanboard, , asm/keymatrix.asm:132
+    81                          _debounce_delay                 = $0303 ; addr, local, , beanboard, , asm/keymatrix.asm:51
+    82                          _delay_end                      = $030F ; addr, local, , beanboard, , asm/keymatrix.asm:61
+    83                          _delay_loop                     = $0308 ; addr, local, , beanboard, , asm/keymatrix.asm:55
+    84                          _do_usb_put                     = $00A6 ; addr, local, , beanboard, , asm/UM245R.asm:44
+    85                          _get_cmd                        = $00D7 ; addr, local, , beanboard, , asm/marvin.asm:22
+    86                          _get_cmd_end                    = $00FC ; addr, local, , beanboard, , asm/marvin.asm:60
+    87                          _get_cmd_esc                    = $00F5 ; addr, local, , beanboard, , asm/marvin.asm:54
+    88                          _hex_byte_val_zero              = $01DF ; addr, local, , beanboard, , asm/strings.asm:40
+    89                          _hex_val_n                      = $01F1 ; addr, local, , beanboard, , asm/strings.asm:64
+    90                          _hex_val_u_n                    = $01EA ; addr, local, , beanboard, , asm/strings.asm:56
+    91                          _keyscanloop                    = $02EA ; addr, local, , beanboard, , asm/keymatrix.asm:27
+    92                          _lcd_putchar_end                = $026C ; addr, local, , beanboard, , asm/HD44780LCD.asm:75
+    93                          _lcd_putchar_eol3               = $0264 ; addr, local, , beanboard, , asm/HD44780LCD.asm:69
+    94                          _lcd_putchar_pad                = $024D ; addr, local, , beanboard, , asm/HD44780LCD.asm:56
+    95                          _lcd_putchar_printable          = $0259 ; addr, local, , beanboard, , asm/HD44780LCD.asm:63
+    96                          _lcd_putcmd_loop                = $0234 ; addr, local, , beanboard, , asm/HD44780LCD.asm:24
+    97                          _lcd_putdata                    = $026D ; addr, local, , beanboard, , asm/HD44780LCD.asm:80
+    98                          _lcd_putdata_loop               = $026F ; addr, local, , beanboard, , asm/HD44780LCD.asm:84
+    99                          _lcd_puts_end                   = $02D0 ; addr, local, , beanboard, , asm/HD44780LCD.asm:175
+   100                          _lcd_puts_loop                  = $02C4 ; addr, local, , beanboard, , asm/HD44780LCD.asm:162
+   101                          _lcd_scroll_clear_line          = $02B6 ; addr, local, , beanboard, , asm/HD44780LCD.asm:148
+   102                          _lcd_scroll_clear_line_loop     = $02BB ; addr, local, , beanboard, , asm/HD44780LCD.asm:153
+   103                          _lcd_scroll_line                = $029D ; addr, local, , beanboard, , asm/HD44780LCD.asm:119
+   104                          _lcd_scroll_line_loop           = $029F ; addr, local, , beanboard, , asm/HD44780LCD.asm:125
+   105                          _modifier_shift                 = $032C ; addr, local, , beanboard, , asm/keymatrix.asm:107
+   106                          _putchar_beanboard              = $0057 ; addr, local, , beanboard, , asm/console.asm:49
+   107                          _putchar_end                    = $0061 ; addr, local, , beanboard, , asm/console.asm:56
+   108                          _putchar_hex_dgt                = $020B ; addr, local, , beanboard, , asm/strings.asm:91
+   109                          _putchar_hex_n                  = $0215 ; addr, local, , beanboard, , asm/strings.asm:101
+   110                          _putchar_usb                    = $005D ; addr, local, , beanboard, , asm/console.asm:53
+   111                          _puts_end                       = $0072 ; addr, local, , beanboard, , asm/console.asm:88
+   112                          _puts_loop                      = $0066 ; addr, local, , beanboard, , asm/console.asm:75
+   113                          _readchar_beanboard             = $003B ; addr, local, , beanboard, , asm/console.asm:20
+   114                          _readchar_end                   = $0043 ; addr, local, , beanboard, , asm/console.asm:25
+   115                          _readchar_usb                   = $0040 ; addr, local, , beanboard, , asm/console.asm:23
+   116                          _rowscan                        = $0312 ; addr, local, , beanboard, , asm/keymatrix.asm:71
+   117                          _usb_no_char                    = $0098 ; addr, local, , beanboard, , asm/UM245R.asm:32
+   118                          _usb_put                        = $00AA ; addr, local, , beanboard, , asm/UM245R.asm:49
+   119                          _usb_put_loop                   = $00AC ; addr, local, , beanboard, , asm/UM245R.asm:53
+   120                          _usb_puts_end                   = $00C4 ; addr, local, , beanboard, , asm/UM245R.asm:83
+   121                          _usb_puts_loop                  = $00B8 ; addr, local, , beanboard, , asm/UM245R.asm:70
+   122                          beanboard_console_init          = $0074 ; addr, local, , beanboard, , asm/console.asm:94
+   123                          getchar                         = $0023 ; addr, local, , beanboard, , asm/console.asm:2
+   124                          hex_byte_val                    = $01C0 ; addr, local, , beanboard, , asm/strings.asm:4
+   125                          hex_val                         = $01E3 ; addr, local, , beanboard, , asm/strings.asm:48
+   126                          key_readchar                    = $02D2 ; addr, local, , beanboard, , asm/keymatrix.asm:10
+   127                          key_readchar_end                = $02FC ; addr, local, , beanboard, , asm/keymatrix.asm:43
+   128                          lcd_getchar                     = $023F ; addr, local, , beanboard, , asm/HD44780LCD.asm:39
+   129                          lcd_init                        = $021B ; addr, local, , beanboard, , asm/HD44780LCD.asm:2
+   130                          lcd_putchar                     = $0248 ; addr, local, , beanboard, , asm/HD44780LCD.asm:51
+   131                          lcd_putcmd                      = $0232 ; addr, local, , beanboard, , asm/HD44780LCD.asm:20
+   132                          lcd_puts                        = $02C3 ; addr, local, , beanboard, , asm/HD44780LCD.asm:160
+   133                          lcd_scroll                      = $027E ; addr, local, , beanboard, , asm/HD44780LCD.asm:102
+   134                          modifierkeys                    = $031F ; addr, local, , beanboard, , asm/keymatrix.asm:95
+   135                          putchar                         = $0045 ; addr, local, , beanboard, , asm/console.asm:37
+   136                          putchar_hex                     = $01F4 ; addr, local, , beanboard, , asm/strings.asm:70
+   137                          puts                            = $0065 ; addr, local, , beanboard, , asm/console.asm:73
+   138                          readchar                        = $002B ; addr, local, , beanboard, , asm/console.asm:10
+   139                          usb_putchar                     = $009B ; addr, local, , beanboard, , asm/UM245R.asm:36
+   140                          usb_puts                        = $00B7 ; addr, local, , beanboard, , asm/UM245R.asm:68
+   141                          usb_readchar                    = $008A ; addr, local, , beanboard, , asm/UM245R.asm:16
+   142                          
+beanboard.asm:
+     2                          include "../../lib/extra.map"
+../../lib/extra.map:
+     1                          GPIO_OUT    equ 6 ; either 6 or 7 will work
+     2                          GPIO_IN     equ 7 ; either 6 or 7 will work
+     3                          
+beanboard.asm:
+     3                          ORG ORGDEF
+     4                          include "RA8875.inc"
+RA8875.inc:
+     1                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+     2                          ; ra8875 definitions
+     3                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+     4                          
+     5                          ; NOTE: this file only includes settings for an 800x480 display
+     6                          ; Settings for other display resolutions may be added
+     7                          ; Typically a resolution-specific setting is provided with a further
+     8                          ; alias  which is what the library will use, e.g.
+     9                          ; RA8875_PCSR_800x480 defines the setting for 800x480 resolution
+    10                          ; which is assigned to RA8875_PCSR_VAL
+    11                          ; the library will use RA8875_PCSR_VAL
+    12                          
+    13                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    14                          ; ra8875 commands
+    15                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    16                          
+    17                          RA8875_DATAWRITE equ 0x00
+    18                          RA8875_DATAREAD equ 0x40
+    19                          RA8875_CMDWRITE equ 0x80
+    20                          RA8875_CMDREAD equ 0xC0
+    21                          
+    22                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    23                          ; RA8875 registers and their values
+    24                          ; based on RA8875 datasheet and Adafruit RA8875 library
+    25                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    26                          
+    27                          ; REG[01h] Power and Display Control Register (PWRR)
+    28                          RA8875_PWRR equ 0x01
+    29                          RA8875_PWRR_DISPON equ 0x80
+    30                          RA8875_PWRR_DISPOFF equ 0x00
+    31                          RA8875_PWRR_SLEEP equ 0x02
+    32                          RA8875_PWRR_NORMAL equ 0x00
+    33                          RA8875_PWRR_SOFTRESET equ 0x01
+    34                          
+    35                          ; REG[02h] Memory Read/Write Command (MRWC)
+    36                          ; Write Function : Memory Write Data
+    37                          ; Data to write in memory corresponding to the setting of MWCR1[3:2].
+    38                          ; Continuous data write cycle can be accepted in bulk data write case.
+    39                          ; Read Function : Memory Read Data
+    40                          ; Data to read from memory corresponding to the setting of MWCR1[3:2].
+    41                          ; Continuous data read cycle can be accepted in bulk data read case.
+    42                          ; Note that the first data read cycle is dummy read and need to be ignored.
+    43                          RA8875_MRWC equ 0x02
+    44                          
+    45                          ; REG[04h] Pixel Clock Setting Register (PCSR)
+    46                          RA8875_PCSR equ 0x04
+    47                          RA8875_PCSR_PDATR equ 0x00
+    48                          RA8875_PCSR_PDATL equ 0x80
+    49                          RA8875_PCSR_CLK equ 0x00
+    50                          RA8875_PCSR_2CLK equ 0x01
+    51                          RA8875_PCSR_4CLK equ 0x02
+    52                          RA8875_PCSR_8CLK equ 0x03
+    53                          RA8875_PCSR_800x480 equ RA8875_PCSR_PDATL | RA8875_PCSR_2CLK
+    54                          RA8875_PCSR_VAL equ RA8875_PCSR_800x480
+    55                          
+    56                          ; REG[10h] System Configuration Register (SYSR)
+    57                          RA8875_SYSR equ 0x10
+    58                          RA8875_SYSR_8BPP equ 0x00  ; 8-bpp generic TFT, i.e. 256 colors.
+    59                          RA8875_SYSR_16BPP equ 0x0C ; 16-bpp generic TFT, i.e. 65K colors.
+    60                          RA8875_SYSR_MCU8 equ 0x00  ; 8-bit MCU Interface
+    61                          RA8875_SYSR_MCU16 equ 0x03 ; 16-bit MCU Interface
+    62                          
+    63                          ; REG[14h] LCD Horizontal Display Width Register (HDWR)
+    64                          ; Horizontal Display Width Setting Bit[6:0]
+    65                          ; The register specifies the LCD panel horizontal display width in the unit of 8 pixels resolution.
+    66                          ; Horizontal display width(pixels) = (HDWR + 1)x8
+    67                          RA8875_HDWR equ 0x14
+    68                          RA8875_HDWR_800x480 equ (800 / 8) - 1
+    69                          RA8875_HDWR_VAL equ RA8875_HDWR_800x480
+    70                          
+    71                          ; REG[15h] Horizontal Non-Display Period Fine Tuning Option Register (HNDFTR)
+    72                          ; Horizontal Non-Display Period Fine Tuning(HNDFT) [3:0]
+    73                          ; This register specifies the fine tuning for horizontal non-display period;
+    74                          ; it is used to support the SYNC mode panel. Each level of this modulation is 2-pixel.
+    75                          RA8875_HNDFTR equ 0x15
+    76                          RA8875_HNDFTR_DE_HIGH equ 0x00
+    77                          RA8875_HNDFTR_DE_LOW equ 0x80
+    78                          RA8875_HNDFTR_800x480 equ RA8875_HNDFTR_DE_HIGH + 0 ; polarity + fine tuning value
+    79                          RA8875_HNDFTR_VAL equ RA8875_HNDFTR_800x480
+    80                          
+    81                          ; REG[16h] LCD Horizontal Non-Display Period Register (HNDR)
+    82                          ; Horizontal Non-Display Period(HNDP) Bit[4:0]
+    83                          ; This register specifies the horizontal non-display period.
+    84                          ; Horizontal Non-Display Period (pixels) =(HNDR + 1)x8+(HNDFTR/2+1)x2 + 2
+    85                          RA8875_HNDR equ 0x16
+    86                          ; (hsync_nondisp - hsync_finetune - 2) /8)
+    87                          RA8875_HNDR_800x480 equ (26-0-2)/8 ; =3
+    88                          RA8875_HNDR_VAL equ RA8875_HNDR_800x480
+    89                          
+    90                          ; REG[17h] HSYNC Start Position Register (HSTR)
+    91                          ; HSYNC Start Position[4:0]
+    92                          ; The starting position from the end of display area to the beginning of HSYNC.
+    93                          ; Each level of this modulation is 8-pixel. HSYNC Start Position(pixels) = (HSTR + 1)x8
+    94                          RA8875_HSTR equ 0x17
+    95                          ; hsync_start / 8 - 1
+    96                          RA8875_HSTR_800x480 equ 32 / 8 - 1 ; =3
+    97                          RA8875_HSTR_VAL equ RA8875_HSTR_800x480
+    98                          
+    99                          ; REG[18h] HSYNC Pulse Width Register (HPWR)
+   100                          RA8875_HPWR equ 0x18
+   101                          RA8875_HPWR_LOW equ 0x00
+   102                          RA8875_HPWR_HIGH equ 0x80
+   103                          ; HSYNC Pulse Width(HPW) [4:0]
+   104                          ; The period width of HSYNC.
+   105                          ; HSYNC Pulse Width(pixels) = (HPW + 1)x8
+   106                          ; hsync_pw / 8 - 1
+   107                          RA8875_HPWR_800x480 equ RA8875_HPWR_LOW + 96 / 8 - 1 ; =11 =0x0b
+   108                          RA8875_HPWR_VAL equ RA8875_HPWR_800x480
+   109                          
+   110                          ; REG[19h] LCD Vertical Display Height Register (VDHR0)
+   111                          ; Vertical Display Height Bit[7:0]
+   112                          ; Vertical Display Height(Line) = VDHR + 1
+   113                          ; lower byte of line_height-1
+   114                          RA8875_VDHR0 equ 0x19
+   115                          RA8875_VDHR0_800x480 equ 0x00ff & (480 - 1)
+   116                          RA8875_VDHR0_VAL equ RA8875_VDHR0_800x480
+   117                          
+   118                          ; REG[1Ah] LCD Vertical Display Height Register0 (VDHR1)
+   119                          ; Vertical Display Height Bit[8]
+   120                          ; Vertical Display Height(Line) = VDHR + 1
+   121                          ; (only bit 0 is used)
+   122                          ; upper byte of line_height-1
+   123                          RA8875_VDHR1 equ 0x1A
+   124                          RA8875_VDHR1_800x480 equ (0xff00 & (480 - 1)) / 0x100
+   125                          RA8875_VDHR1_VAL equ RA8875_VDHR1_800x480
+   126                          
+   127                          ; REG[1Bh] LCD Vertical Non-Display Period Register (VNDR0)
+   128                          ; Vertical Non-Display Period Bit[7:0]
+   129                          ; Vertical Non-Display Period(Line) = (VNDR + 1)
+   130                          ; lower byte of val-1
+   131                          RA8875_VNDR0 equ 0x1B
+   132                          RA8875_VNDR0_800x480 equ 32-1
+   133                          RA8875_VNDR0_VAL equ RA8875_VNDR0_800x480
+   134                          
+   135                          ; REG[1Ch] LCD Vertical Non-Display Period Register (VNDR1)
+   136                          ; Vertical Non-Display Period Bit[8]
+   137                          ; Vertical Non-Display Period(Line) = (VNDR + 1)
+   138                          ; upper byte of val-1
+   139                          RA8875_VNDR1 equ 0x1C
+   140                          RA8875_VNDR1_800x480 equ 0
+   141                          RA8875_VNDR1_VAL equ RA8875_VNDR1_800x480
+   142                          
+   143                          ; REG[1Dh] VSYNC Start Position Register (VSTR0)
+   144                          ; VSYNC Start Position[7:0]
+   145                          ; The starting position from the end of display area to the beginning of VSYNC.
+   146                          ; VSYNC Start Position(Line) = (VSTR + 1)
+   147                          ; lower byte of val-1
+   148                          RA8875_VSTR0 equ 0x1D
+   149                          RA8875_VSTR0_800x480 equ 23-1
+   150                          RA8875_VSTR0_VAL equ RA8875_VSTR0_800x480
+   151                          
+   152                          ; REG[1Eh] VSYNC Start Position Register (VSTR1)
+   153                          ; VSYNC Start Position[8]
+   154                          ; The starting from the end of display area to the beginning of VSYNC.
+   155                          ; VSYNC Start Position(Line) = (VSTR + 1)
+   156                          ; upper byte of val-1
+   157                          RA8875_VSTR1 equ 0x1E
+   158                          RA8875_VSTR1_800x480 equ 0
+   159                          RA8875_VSTR1_VAL equ RA8875_VSTR1_800x480
+   160                          
+   161                          ; REG[1Fh] VSYNC Pulse Width Register (VPWR)
+   162                          ; VSYNC Polarity [7]
+   163                          ; 0 : Low active. 1 : High active.
+   164                          ; VSYNC Pulse Width[6:0]
+   165                          ; The pulse width of VSYNC in lines. VSYNC Pulse Width(Line) = (VPWR + 1)
+   166                          RA8875_VPWR equ 0x1F
+   167                          RA8875_VPWR_LOW equ 0x00
+   168                          RA8875_VPWR_HIGH equ 0x80
+   169                          RA8875_VPWR_800x480 equ RA8875_VPWR_LOW + (2 - 1) ; polarity + pulse_width_val-1
+   170                          RA8875_VPWR_VAL equ RA8875_VPWR_800x480
+   171                          
+   172                          ; REG[21h] Font Control Register 0 (FNCR0)
+   173                          RA8875_FNCR0 equ 0x21
+   174                          ; Bit 7 - CGRAM/CGROM Font Selection Bit in Text Mode
+   175                          ; 0 : CGROM font is selected.
+   176                          ; 1 : CGRAM font is selected.
+   177                          ; Note:
+   178                          ; 1. The bit is used to select the bit-map source when text-mode is active
+   179                          ; (REG[40h] bit 7 is 1), when CGRAM is writing (REG[41h] bit 3-2 =01b),
+   180                          ; the bit must be set as “0”.
+   181                          ; 2. When CGRAM font is select, REG[21h] bit 5 must be set as 1.
+   182                          ; Bit 5 - External/Internal CGROM Selection Bit
+   183                          ; 0 : Internal CGROM is selected.(REG[2Fh] must be set 00h )
+   184                          ; 1 : External CGROM is selected. (REG[2Eh] bit6 &bit7 must be set 0)
+   185                          ; Bit 1-0 - Font Selection for internal CGROM
+   186                          ; When FNCR0 B7 = 0 and B5 = 0, Internal CGROM supports the 8x16 character sets
+   187                          ; with the standard coding of ISO/IEC 8859- 1~4, which supports English
+   188                          ; and most of European country languages.
+   189                          ; 00b : ISO/IEC 8859-1.
+   190                          ; 01b : ISO/IEC 8859-2.
+   191                          ; 10b : ISO/IEC 8859-3.
+   192                          ; 11b : ISO/IEC 8859-4.
+   193                          
+   194                          ; REG[2Ah] Font Write Cursor Horizontal Position Register 0 (F_CURXL)
+   195                          ; Font Write Cursor Horizontal Position[7:0]
+   196                          ; The setting of the horizontal cursor position for font writing.
+   197                          RA8875_F_CURXL equ 0x2a
+   198                          
+   199                          ; REG[2Bh] Font Write Cursor Horizontal Position Register 1 (F_CURXH)
+   200                          ; Font Write Cursor Horizontal Position[9:8]
+   201                          ; The setting of the horizontal cursor position for font writing.
+   202                          RA8875_F_CURXH equ 0x2b
+   203                          
+   204                          ; REG[2Ch] Font Write Cursor Vertical Position Register 0 (F_CURYL)
+   205                          ; Font Write Cursor Vertical Position[7:0]
+   206                          ; The setting of the vertical cursor position for font writing.
+   207                          RA8875_F_CURYL equ 0x2c
+   208                          
+   209                          ; REG[2Dh] Font Write Cursor Vertical Position Register 1 (F_CURYH)
+   210                          ; Font Write Cursor Vertical Position[8]
+   211                          ; The setting of the vertical cursor position for font writing.
+   212                          RA8875_F_CURYH equ 0x2d
+   213                          
+   214                          ; REG[30h] Horizontal Start Point 0 of Active Window (HSAW0)
+   215                          ; Horizontal Start Point of Active Window [7:0]
+   216                          ; (lower byte)
+   217                          RA8875_HSAW0 equ 0x30
+   218                          RA8875_HSAW0_800x480 equ 0
+   219                          RA8875_HSAW0_VAL equ RA8875_HSAW0_800x480
+   220                          
+   221                          ; REG[31h] Horizontal Start Point 1 of Active Window (HSAW1)
+   222                          ; Horizontal Start Point of Active Window [9:8]
+   223                          ; (upper byte, only 2 bits are significant)
+   224                          RA8875_HSAW1 equ 0x31
+   225                          RA8875_HSAW1_800x480 equ 0
+   226                          RA8875_HSAW1_VAL equ RA8875_HSAW1_800x480
+   227                          
+   228                          
+   229                          ; REG[32h] Vertical Start Point 0 of Active Window (VSAW0)
+   230                          ; Vertical Start Point of Active Window [7:0]
+   231                          ; (lower byte)
+   232                          RA8875_VSAW0 equ 0x32
+   233                          RA8875_VSAW0_800x480 equ 0
+   234                          RA8875_VSAW0_VAL equ RA8875_VSAW0_800x480
+   235                          
+   236                          
+   237                          ; REG[33h] Vertical Start Point 1 of Active Window (VSAW1)
+   238                          ; Vertical Start Point of Active Window [8]
+   239                          ; (upper byte, only 1 bit is significant)
+   240                          RA8875_VSAW1 equ 0x33
+   241                          RA8875_VSAW1_800x480 equ 0
+   242                          RA8875_VSAW1_VAL equ RA8875_VSAW1_800x480
+   243                          
+   244                          ; REG[34h] Horizontal End Point 0 of Active Window (HEAW0)
+   245                          ; Horizontal End Point of Active Window [7:0]
+   246                          ; (lower byte)
+   247                          ; NOTE: datasheet does not mention an offset of 1
+   248                          RA8875_HEAW0 equ 0x34
+   249                          RA8875_HEAW0_800x480 equ 0x00ff & (800 - 1)
+   250                          RA8875_HEAW0_VAL equ RA8875_HEAW0_800x480
+   251                          
+   252                          ; REG[35h] Horizontal End Point 1 of Active Window (HEAW1)
+   253                          ; Horizontal End Point of Active Window [9:8]
+   254                          ; (upper byte, only 2 bits are significant)
+   255                          ; NOTE: datasheet does not mention an offset of 1
+   256                          RA8875_HEAW1 equ 0x35
+   257                          RA8875_HEAW1_800x480 equ (0xff00 & (800 - 1)) / 0x100
+   258                          RA8875_HEAW1_VAL equ RA8875_HEAW1_800x480
+   259                          
+   260                          ; REG[36h] Vertical End Point of Active Window 0 (VEAW0)
+   261                          ; Vertical End Point of Active Window [7:0]
+   262                          ; (lower byte)
+   263                          RA8875_VEAW0 equ 0x36
+   264                          RA8875_VEAW0_800x480 equ 0x00ff & (480 - 1)
+   265                          RA8875_VEAW0_VAL equ RA8875_VEAW0_800x480
+   266                          
+   267                          ; REG[37h] Vertical End Point of Active Window 1 (VEAW1)
+   268                          ; Vertical End Point of Active Window [8]
+   269                          ; (upper byte, only 1 bit is significant)
+   270                          RA8875_VEAW1 equ 0x37
+   271                          RA8875_VEAW1_800x480 equ  (0xff00 & (480 - 1)) / 0x100
+   272                          RA8875_VEAW1_VAL equ RA8875_VEAW1_800x480
+   273                          
+   274                          ; REG[40h] Memory Write Control Register 0 (MWCR0)
+   275                          ; Bit 7 - Text Mode Enable
+   276                          ; 0 : Graphic mode.
+   277                          ; 1 : Text mode.
+   278                          ; Bit 6 - Font Write Cursor/ Memory Write Cursor Enable
+   279                          ; 0 : Font write cursor/ Memory Write Cursor is not visible.
+   280                          ; 1 : Font write cursor/ Memory Write Cursor is visible.
+   281                          ; Bit 5 - Font Write Cursor/ Memory Write Cursor Blink Enable
+   282                          ; 0 : Normal display.
+   283                          ; 1 : Blink display.
+   284                          ; Bit 3-2 - Memory Write Direction (Only for Graphic Mode)
+   285                          ; 00b : Left>Right then Top>Down.
+   286                          ; 01b : Right>Left then Top>Down.
+   287                          ; 10b : Top>Down then Left>Right.
+   288                          ; 11b : Down>Top then Left>Right.
+   289                          ; Bit 1 - Memory Write Cursor Auto-Increase Disable
+   290                          ; 0 : Cursor auto-increases when memory write.
+   291                          ; 1 : Cursor doesn’t auto-increases when memory write.
+   292                          ; Bit 0 - Memory Read Cursor Auto-Increase Disable
+   293                          ; 0 : Cursor auto-increases when memory read.
+   294                          ; 1 : Cursor doesn’t auto-increases when memory read.
+   295                          RA8875_MWCR0 equ 0x40
+   296                          RA8875_MWCR0_GFXMODE equ 0x00
+   297                          RA8875_MWCR0_TXTMODE equ 0x80
+   298                          RA8875_MWCR0_CURSOR equ 0x40
+   299                          RA8875_MWCR0_BLINK equ 0x20
+   300                          
+   301                          ; REG[44h] Blink Time Control Register (BTCR)
+   302                          ; Text Blink Time Setting (Unit: Frame)
+   303                          RA8875_BTCR equ 0x44
+   304                          
+   305                          ; REG[88h] PLL Control Register 1 (PLLC1)
+   306                          RA8875_PLLC1 equ 0x88
+   307                          RA8875_PLLC1_PLLDIV1 equ 0x00
+   308                          RA8875_PLLC1_PLLDIV2 equ 0x80
+   309                          RA8875_PLLC1_800x480 equ RA8875_PLLC1_PLLDIV1 + 11
+   310                          RA8875_PLLC1_VAL equ RA8875_PLLC1_800x480
+   311                          
+   312                          ; REG[89h] PLL Control Register 2 (PLLC2)
+   313                          RA8875_PLLC2 equ 0x89
+   314                          RA8875_PLLC2_DIV1 equ 0x00
+   315                          RA8875_PLLC2_DIV2 equ 0x01
+   316                          RA8875_PLLC2_DIV4 equ 0x02
+   317                          RA8875_PLLC2_DIV8 equ 0x03
+   318                          RA8875_PLLC2_DIV16 equ 0x04
+   319                          RA8875_PLLC2_DIV32 equ 0x05
+   320                          RA8875_PLLC2_DIV64 equ 0x06
+   321                          RA8875_PLLC2_DIV128 equ 0x07
+   322                          RA8875_PLLC2_800x480 equ RA8875_PLLC2_DIV4
+   323                          RA8875_PLLC2_VAL equ RA8875_PLLC2_800x480
+   324                          
+   325                          ; REG[8Ah] PWM1 Control Register (P1CR)
+   326                          ; Bit 7
+   327                          ; PWM1 Enable
+   328                          ; 0 : Disable, PWM1_OUT level depends on P1CR bit6.
+   329                          ; 1 : Enable.
+   330                          ; Bit 6
+   331                          ; PWM1 Disable Level
+   332                          ; 0 : PWM1_OUT is Normal L when PWM disable or Sleep mode. 1 : PWM1_OUT is Normal H when PWM disable or Sleep mode
+   333                          ; The bit is only usable when P1CR bit 4 is 0
+   334                          ; Bit 4
+   335                          ; PWM1 Function Selection
+   336                          ; 0 : PWM1 function
+   337                          ; 1 : PWM1 output a fixed frequency signal and it is equal to 1 /16 oscillator clock. PWM1 = FOSC / 16
+   338                          ; Bit 0-3
+   339                          ; PWM1 Clock Source Divide Ratio:
+   340                          ; 1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768
+   341                          RA8875_P1CR equ 0x8A
+   342                          RA8875_P1CR_ENABLE equ 0x80
+   343                          RA8875_P1CR_DISABLE equ 0x00
+   344                          RA8875_P1CR_CLKOUT equ 0x10
+   345                          RA8875_P1CR_PWMOUT equ 0x00
+   346                          RA8875_PWM_CLK_DIV1 equ 0x00
+   347                          RA8875_PWM_CLK_DIV2 equ 0x01
+   348                          RA8875_PWM_CLK_DIV4 equ 0x02
+   349                          RA8875_PWM_CLK_DIV8 equ 0x03
+   350                          RA8875_PWM_CLK_DIV16 equ 0x04
+   351                          RA8875_PWM_CLK_DIV32 equ 0x05
+   352                          RA8875_PWM_CLK_DIV64 equ 0x06
+   353                          RA8875_PWM_CLK_DIV128 equ 0x07
+   354                          RA8875_PWM_CLK_DIV256 equ 0x08
+   355                          RA8875_PWM_CLK_DIV512 equ 0x09
+   356                          RA8875_PWM_CLK_DIV1024 equ 0x0A
+   357                          RA8875_PWM_CLK_DIV2048 equ 0x0B
+   358                          RA8875_PWM_CLK_DIV4096 equ 0x0C
+   359                          RA8875_PWM_CLK_DIV8192 equ 0x0D
+   360                          RA8875_PWM_CLK_DIV16384 equ 0x0E
+   361                          RA8875_PWM_CLK_DIV32768 equ 0x0F
+   362                          RA8875_P1CR_VAL equ RA8875_P1CR_ENABLE | RA8875_P1CR_PWMOUT | RA8875_PWM_CLK_DIV1024
+   363                          
+   364                          ; REG[8Bh] PWM1 Duty Cycle Register (P1DCR)
+   365                          ; PWM Cycle Duty Selection Bits[7:0]
+   366                          ; 0x00 = 1/256, 0xff = 256/256
+   367                          RA8875_P1DCR equ 0x8B
+   368                          
+   369                          ; REG[8Eh] Memory Clear Control Register (MCLR)
+   370                          ; Bit 7
+   371                          ; Memory Clear Function
+   372                          ; 0 : End or Stop. When write 0 to this bit RA8875 will stop the Memory clear function.
+   373                          ; Or if read back this bit is 0, it indicates that Memory clear function is complete.
+   374                          ; 1 : Start the memory clear function.
+   375                          ; Bit 6
+   376                          ; Memory Clear Area Setting
+   377                          ; 0 : Clear the full window. (Please refer to the setting of REG[14h], [19h], [1Ah])
+   378                          ; 1 : Clear the active window(Please refer to the setting of REG[30h~37h]).
+   379                          ; The layer to be cleared is according to the setting REG[41h] Bit0.
+   380                          RA8875_MCLR equ 0x8E
+   381                          RA8875_MCLR_START equ 0x80
+   382                          RA8875_MCLR_STOP equ 0x00
+   383                          RA8875_MCLR_READSTATUS equ 0x80
+   384                          RA8875_MCLR_FULL equ 0x00
+   385                          RA8875_MCLR_ACTIVE equ 0x40
+   386                          
+   387                          ; REG[C7h] Extra General Purpose IO Register (GPIOX)
+   388                          ; Bit 0
+   389                          ; The GPIX/GPOX Data Bit
+   390                          ; Read: Input data from GPIX pin. Write: Output data to GPOX pin.
+   391                          ; On the Adafruit board, TFT display enable is tied to GPIOX
+   392                          RA8875_GPIOX equ 0xC7
+   393                          
+   394                          ; expected value in register 0 - validates presence of RA8875
+   395                          RA8875_REG_0_VAL equ 0x75
+   396                          
+   397                          ; default cursor blink rate
+   398                          RA8875_CURSOR_BLINK_RATE equ 0x20
+   399                          
+beanboard.asm:
+     5                          include "main.asm"
+main.asm:
+     1                          start:
+     2                          
+     3  0000  cdb402                call ra8875_initialise
+     4  0003  c23200                jp nz,ra8875_controller_error
+     5                          
+     6  0006  cded02                call ra8875_text_mode
+     7  0009  3e20                  ld a,RA8875_CURSOR_BLINK_RATE
+     8  000b  cd0a03                call ra8875_cursor_blink
+     9                          
+    10  000e  cd3b00                call dump_registers
+    11                          
+    12  0011  cd5300                call test_print_all_chars
+    13  0014  cd2300                call getchar
+    14                          
+    15  0017  cd9a00                call test_cursor_positioning
+    16  001a  cd2300                call getchar
+    17                          
+    18  001d  cd7000                call test_fill_screen
+    19  0020  cd2300                call getchar
+    20                          
+    21  0023  cd7602                call ra8875_clear_window
+    22  0026  cd2300                call getchar
+    23                          
+    24  0029  cd8500                call test_fill_screen_fast
+    25  002c  cd2300                call getchar
+    26                          
+    27                          end:
+    28  002f  c31000                jp WARMSTART
+    29                          
+    30                          ra8875_controller_error:
+    31  0032  21d200                ld hl,ra8875_controller_error_message
+    32  0035  cd6500                call puts
+    33  0038  c31000                jp WARMSTART
+    34                          
+    35                          ; diagnostic functions
+    36                          
+    37                          dump_registers:
+    38  003b  f5                    push af
+    39  003c  c5                    push bc
+    40  003d  0600                  ld b,0x00
+    41  003f  0e00                  ld c,0x00
+    42                          _dump_registers_loop:
+    43  0041  79                    ld a,c ; register number
+    44  0042  cd8401                call ra8875_read_reg
+    45  0045  cdf401                call putchar_hex
+    46  0048  0c                    inc c
+    47  0049  10f6                  djnz _dump_registers_loop
+    48  004b  3e0a                  ld a,'\n'
+    49  004d  cd4500                call putchar
+    50  0050  c1                    pop bc
+    51  0051  f1                    pop af
+    52  0052  c9                    ret
+    53                          
+    54                          ; test functions
+    55                          
+    56                          test_print_all_chars:
+    57  0053  f5                    push af
+    58  0054  3e00                  ld a,0
+    59                          _print_all_chars_loop:
+    60  0056  cd6903                call ra8875_putchar
+    61  0059  3c                    inc a
+    62  005a  fe00                  cp 0
+    63  005c  20f8                  jr nz,_print_all_chars_loop
+    64  005e  f1                    pop af
+    65  005f  c9                    ret
+    66                          
+    67                          test_print_all_chars_fast:
+    68  0060  f5                    push af
+    69  0061  cd6103                call ra8875_memory_read_write_command
+    70  0064  3e00                  ld a,0
+    71                          _test_print_all_chars_fast_loop:
+    72  0066  cd5801                call ra8875_write_data
+    73  0069  3c                    inc a
+    74  006a  fe00                  cp 0
+    75  006c  20f8                  jr nz,_test_print_all_chars_fast_loop
+    76  006e  f1                    pop af
+    77  006f  c9                    ret
+    78                          
+    79                          test_fill_screen:
+    80  0070  e5                    push hl
+    81  0071  c5                    push bc
+    82  0072  210000                ld hl,0
+    83  0075  cd3303                call ra8875_cursor_x
+    84  0078  cd4a03                call ra8875_cursor_y
+    85  007b  060c                  ld b,12
+    86                          _test_fill_screen_loop:
+    87  007d  cd5300                call test_print_all_chars
+    88  0080  10fb                  djnz _test_fill_screen_loop
+    89  0082  c1                    pop bc
+    90  0083  e1                    pop hl
+    91  0084  c9                    ret
+    92                          
+    93                          test_fill_screen_fast:
+    94  0085  e5                    push hl
+    95  0086  c5                    push bc
+    96  0087  210000                ld hl,0
+    97  008a  cd3303                call ra8875_cursor_x
+    98  008d  cd4a03                call ra8875_cursor_y
+    99  0090  060c                  ld b,12
+   100                          _test_fill_screen_fast_loop:
+   101  0092  cd6000                call test_print_all_chars_fast
+   102  0095  10fb                  djnz _test_fill_screen_fast_loop
+   103  0097  c1                    pop bc
+   104  0098  e1                    pop hl
+   105  0099  c9                    ret
+   106                          
+   107                          test_cursor_positioning:
+   108  009a  f5                    push af
+   109  009b  e5                    push hl
+   110                          
+   111                              ; bottom-right corner
+   112  009c  211803                ld hl,800-8
+   113  009f  cd3303                call ra8875_cursor_x
+   114  00a2  21d001                ld hl,480-16
+   115  00a5  cd4a03                call ra8875_cursor_y
+   116  00a8  3e58                  ld a,'X'
+   117  00aa  cd6903                call ra8875_putchar
+   118                          
+   119  00ad  215000                ld hl,10*8
+   120  00b0  cd3303                call ra8875_cursor_x
+   121  00b3  21a000                ld hl,10*16
+   122  00b6  cd4a03                call ra8875_cursor_y
+   123  00b9  3e58                  ld a,'X'
+   124  00bb  cd6903                call ra8875_putchar
+   125                          
+   126  00be  215400                ld hl,10*8+4
+   127  00c1  cd3303                call ra8875_cursor_x
+   128  00c4  21a000                ld hl,10*16
+   129  00c7  cd4a03                call ra8875_cursor_y
+   130  00ca  3e58                  ld a,'X'
+   131  00cc  cd6903                call ra8875_putchar
+   132                          
+   133  00cf  e1                    pop hl
+   134  00d0  f1                    pop af
+   135  00d1  c9                    ret
+   136                          
+   137                          ; strings
+   138                          
+   139                          ra8875_controller_error_message:
+   140  00d2  0a52413838373520      db "\nRA8875 error\n",0
+              6572726f720a00    
+   141                          
+   142                          test_message:
+   143  00e1  48656c6c6f2c2077      db "Hello, world!",0
+              6f726c642100      
+   144                          
+beanboard.asm:
+     6                          include "RA8875.asm"
+RA8875.asm:
+     1                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+     2                          ; definitions
+     3                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+     4                          
+     5                          ; delay
+     6                          
+     7                          ; 0x0e was the minimum needed for PLLC1/2 init with a 10MHz Z80 clock
+     8                          RA8875_DELAY_VAL equ 0xff
+     9                          
+    10                          ; GPIO
+    11                          
+    12                          ; Pin definitions for RA8875 SPI on GPIO port
+    13                          ; GPO
+    14                          ; Serial Clock
+    15                          RA8875_SCK        equ 0
+    16                          ; Master Out Slave In
+    17                          RA8875_MOSI       equ 1
+    18                          ; RA8875 RESET - active LOW
+    19                          RA8875_RESET      equ 2
+    20                          ; Chip Select - active LOW
+    21                          RA8875_CS         equ 3
+    22                          ; GPI
+    23                          RA8875_WAIT       equ 0
+    24                          RA8875_MISO       equ 1
+    25                          
+    26                          ; RESET active/low, CS inactive/high
+    27                          GPO_RESET_STATE  equ 1 << RA8875_CS
+    28                          ; RESET inactive/high, CS inactive/high
+    29                          GPO_INACTIVE_STATE   equ 1 << RA8875_CS | 1 << RA8875_RESET
+    30                          ; RESET inactive/high, CS active/low
+    31                          GPO_ACTIVE_STATE equ 1 << RA8875_RESET
+    32                          ; RESET inactive/high, CS active/low, MOSI low
+    33                          GPO_LOW_STATE    equ 1 << RA8875_RESET
+    34                          ; RESET inactive/high, CS active/low, MOSI high
+    35                          GPO_HIGH_STATE   equ 1 << RA8875_MOSI | 1 << RA8875_RESET
+    36                          
+    37                          
+    38                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    39                          ; low level utilities
+    40                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    41                          ra8875_delay:
+    42  00ef  c5                    push bc
+    43  00f0  06ff                  ld b,RA8875_DELAY_VAL
+    44                          _ra8875_delay_loop:
+    45  00f2  00                    nop
+    46  00f3  10fd                  djnz _ra8875_delay_loop
+    47  00f5  c1                    pop bc
+    48  00f6  c9                    ret
+    49                          
+    50                          
+    51                          ; hardware reset of RA8875
+    52                          ra8875_reset:
+    53  00f7  f5                    push af
+    54  00f8  3e08                  ld a,GPO_RESET_STATE
+    55  00fa  d306                  out (GPIO_OUT),a
+    56  00fc  cdef00                call ra8875_delay
+    57  00ff  3e0c                  ld a,GPO_INACTIVE_STATE
+    58  0101  d306                  out (GPIO_OUT),a
+    59  0103  f1                    pop af
+    60  0104  c9                    ret
+    61                          
+    62                          
+    63                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    64                          ; low level RA8875 SPI routines
+    65                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    66                          
+    67                          ; Write a byte over SPI without readback
+    68                          ; Input: A = byte to send
+    69                          ; Destroys: AF, B, D
+    70                          _ra8875_write:
+    71                              ; bit counter
+    72  0105  0608                  ld b,8
+    73                          _ra8875_write_loop:
+    74                              ; rotate msb into carry flag
+    75  0107  07                    rlca
+    76                              ; stash a
+    77  0108  57                    ld d,a
+    78                              ; default to MOSI low
+    79  0109  3e04                  ld a,GPO_LOW_STATE
+    80  010b  3002                  jr nc,_ra8875_write_bit
+    81  010d  3e06                  ld a,GPO_HIGH_STATE
+    82                          _ra8875_write_bit:
+    83  010f  d306                  out (GPIO_OUT),a
+    84                              ; clock high
+    85  0111  f601                  or 1 << RA8875_SCK
+    86  0113  d306                  out (GPIO_OUT),a
+    87                              ; clock low
+    88  0115  e6fe                  and ~(1 << RA8875_SCK)
+    89  0117  d306                  out (GPIO_OUT),a
+    90                              ; restore A
+    91  0119  7a                    ld a,d
+    92  011a  10eb                  djnz _ra8875_write_loop
+    93  011c  c9                    ret
+    94                          
+    95                          ; Read a byte over SPI (receive from MISO)
+    96                          ; Sends a dummy byte (0x00) during the read
+    97                          ; Output: A = byte received
+    98                          ; Destroys: AF, B, D
+    99                          _ra8875_read:
+   100                              ; bit counter
+   101  011d  0608                  ld b,8
+   102                              ; Initialize received byte
+   103  011f  3e00                  ld a,0
+   104                          _ra8875_read_loop:
+   105                              ; Shift received bits left
+   106  0121  cb27                  sla a
+   107                              ; stash a
+   108  0123  57                    ld d,a
+   109                              ; Set initial low state
+   110  0124  3e04                  ld a,GPO_LOW_STATE
+   111  0126  d306                  out (GPIO_OUT),a
+   112                              ; Set clock high
+   113  0128  f601                  or 1 << RA8875_SCK
+   114  012a  d306                  out (GPIO_OUT),a
+   115                              ; Read MISO bit
+   116  012c  db07                  in a,(GPIO_IN)
+   117  012e  cb4f                  bit RA8875_MISO,a
+   118  0130  2805                  jr z,_ra8875_read_low
+   119                              ; MISO high - set LSB
+   120  0132  7a                    ld a,d
+   121  0133  f601                  or 1
+   122  0135  1801                  jr _ra8875_read_bit_done
+   123                          _ra8875_read_low:
+   124                              ; MISO low - keep LSB clear
+   125  0137  7a                    ld a,d
+   126                          _ra8875_read_bit_done:
+   127                              ; Set clock low
+   128  0138  57                    ld d,a
+   129  0139  3e04                  ld a,GPO_LOW_STATE
+   130  013b  d306                  out (GPIO_OUT),a
+   131                              ; Restore received byte
+   132  013d  7a                    ld a,d
+   133  013e  10e1                  djnz _ra8875_read_loop
+   134  0140  c9                    ret
+   135                          
+   136                          
+   137                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   138                          ; basic RA8875 routines
+   139                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   140                          
+   141                          ; Write a command to RA8875
+   142                          ; A = command parameter
+   143                          ra8875_write_command:
+   144  0141  f5                    push af
+   145  0142  c5                    push bc
+   146  0143  4f                    ld c,a ; stash the data
+   147  0144  3e04                  ld a,GPO_ACTIVE_STATE
+   148  0146  d306                  out (GPIO_OUT),a
+   149  0148  3e80                  ld a,RA8875_CMDWRITE
+   150  014a  cd0501                call _ra8875_write
+   151  014d  79                    ld a,c ; recover the data to send
+   152  014e  cd0501                call _ra8875_write
+   153  0151  3e0c                  ld a,GPO_INACTIVE_STATE
+   154  0153  d306                  out (GPIO_OUT),a
+   155  0155  c1                    pop bc
+   156  0156  f1                    pop af
+   157  0157  c9                    ret
+   158                          
+   159                          ; Write data to RA8875
+   160                          ; A = data
+   161                          ra8875_write_data:
+   162  0158  f5                    push af
+   163  0159  c5                    push bc
+   164  015a  4f                    ld c,a ; stash the data
+   165  015b  3e04                  ld a,GPO_ACTIVE_STATE
+   166  015d  d306                  out (GPIO_OUT),a
+   167  015f  3e00                  ld a,RA8875_DATAWRITE
+   168  0161  cd0501                call _ra8875_write
+   169  0164  79                    ld a,c ; recover the data to send
+   170  0165  cd0501                call _ra8875_write
+   171  0168  3e0c                  ld a,GPO_INACTIVE_STATE
+   172  016a  d306                  out (GPIO_OUT),a
+   173  016c  c1                    pop bc
+   174  016d  f1                    pop af
+   175  016e  c9                    ret
+   176                          
+   177                          ; read data from RA8875
+   178                          ; returns data in A
+   179                          ra8875_read_data:
+   180  016f  c5                    push bc
+   181  0170  3e04                  ld a,GPO_ACTIVE_STATE
+   182  0172  d306                  out (GPIO_OUT),a
+   183  0174  3e40                  ld a,RA8875_DATAREAD
+   184  0176  cd0501                call _ra8875_write
+   185  0179  cd1d01                call _ra8875_read
+   186  017c  47                    ld b,a ; stash data
+   187  017d  3e0c                  ld a,GPO_INACTIVE_STATE
+   188  017f  d306                  out (GPIO_OUT),a
+   189  0181  78                    ld a,b ; restore data
+   190  0182  c1                    pop bc
+   191  0183  c9                    ret
+   192                          
+   193                          
+   194                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   195                          ; ra8875 register access routines
+   196                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   197                          
+   198                          ; read from RA8875 register
+   199                          ; A = register number to read
+   200                          ra8875_read_reg:
+   201  0184  cd4101                call ra8875_write_command
+   202  0187  cd6f01                call ra8875_read_data
+   203  018a  c9                    ret
+   204                          
+   205                          ; A = register number
+   206                          ; B = data
+   207                          ra8875_write_reg:
+   208  018b  f5                    push af
+   209  018c  cd4101                call ra8875_write_command ; A = register number
+   210  018f  78                    ld a,b
+   211  0190  cd5801                call ra8875_write_data
+   212  0193  f1                    pop af
+   213  0194  c9                    ret
+   214                          
+   215                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   216                          ; higher level RA8875 routines
+   217                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   218                          
+   219                          ; Check RA8875 register 0 for expected value
+   220                          ; Z flag set if matched, reset if not
+   221                          ; destroys A
+   222                          ra8875_reg_0_check:
+   223  0195  3e00                  ld a,0x00 ; register number
+   224  0197  cd8401                call ra8875_read_reg
+   225  019a  fe75                  cp RA8875_REG_0_VAL ; sets Z flag if matched
+   226  019c  c9                    ret
+   227                          
+   228                          ra8875_pllc1_init:
+   229  019d  f5                    push af
+   230  019e  c5                    push bc
+   231  019f  3e88                  ld a,RA8875_PLLC1
+   232  01a1  060b                  ld b,RA8875_PLLC1_VAL
+   233  01a3  cd8b01                call ra8875_write_reg
+   234  01a6  cdef00                call ra8875_delay
+   235  01a9  c1                    pop bc
+   236  01aa  f1                    pop af
+   237  01ab  c9                    ret
+   238                          
+   239                          ra8875_pllc2_init:
+   240  01ac  f5                    push af
+   241  01ad  c5                    push bc
+   242  01ae  3e89                  ld a,RA8875_PLLC2
+   243  01b0  0602                  ld b,RA8875_PLLC2_VAL
+   244  01b2  cd8b01                call ra8875_write_reg
+   245  01b5  cdef00                call ra8875_delay
+   246  01b8  c1                    pop bc
+   247  01b9  f1                    pop af
+   248  01ba  c9                    ret
+   249                          
+   250                          ra8875_sysr_init:
+   251  01bb  f5                    push af
+   252  01bc  c5                    push bc
+   253  01bd  3e10                  ld a,RA8875_SYSR
+   254  01bf  060c                  ld b,RA8875_SYSR_16BPP | RA8875_SYSR_MCU8
+   255  01c1  cd8b01                call ra8875_write_reg
+   256  01c4  c1                    pop bc
+   257  01c5  f1                    pop af
+   258  01c6  c9                    ret
+   259                          
+   260                          ra8875_pcsr_init:
+   261  01c7  f5                    push af
+   262  01c8  c5                    push bc
+   263  01c9  3e04                  ld a,RA8875_PCSR
+   264  01cb  0681                  ld b,RA8875_PCSR_VAL
+   265  01cd  cd8b01                call ra8875_write_reg
+   266  01d0  cdef00                call ra8875_delay
+   267  01d3  c1                    pop bc
+   268  01d4  f1                    pop af
+   269  01d5  c9                    ret
+   270                          
+   271                          ra8875_horizontal_settings_init:
+   272  01d6  f5                    push af
+   273  01d7  c5                    push bc
+   274  01d8  3e14                  ld a,RA8875_HDWR
+   275  01da  0663                  ld b,RA8875_HDWR_VAL
+   276  01dc  cd8b01                call ra8875_write_reg
+   277  01df  3e15                  ld a,RA8875_HNDFTR
+   278  01e1  0600                  ld b,RA8875_HNDFTR_VAL
+   279  01e3  cd8b01                call ra8875_write_reg
+   280  01e6  3e16                  ld a,RA8875_HNDR
+   281  01e8  0603                  ld b,RA8875_HNDR_VAL
+   282  01ea  cd8b01                call ra8875_write_reg
+   283  01ed  3e17                  ld a,RA8875_HSTR
+   284  01ef  0603                  ld b,RA8875_HSTR_VAL
+   285  01f1  cd8b01                call ra8875_write_reg
+   286  01f4  3e18                  ld a,RA8875_HPWR
+   287  01f6  060b                  ld b,RA8875_HPWR_VAL
+   288  01f8  cd8b01                call ra8875_write_reg
+   289  01fb  c1                    pop bc
+   290  01fc  f1                    pop af
+   291  01fd  c9                    ret
+   292                          
+   293                          ra8875_vertical_settings_init:
+   294  01fe  f5                    push af
+   295  01ff  c5                    push bc
+   296  0200  3e19                  ld a,RA8875_VDHR0
+   297  0202  06df                  ld b,RA8875_VDHR0_VAL
+   298  0204  cd8b01                call ra8875_write_reg
+   299  0207  3e1a                  ld a,RA8875_VDHR1
+   300  0209  0601                  ld b,RA8875_VDHR1_VAL
+   301  020b  cd8b01                call ra8875_write_reg
+   302  020e  3e1b                  ld a,RA8875_VNDR0
+   303  0210  061f                  ld b,RA8875_VNDR0_VAL
+   304  0212  cd8b01                call ra8875_write_reg
+   305  0215  3e1c                  ld a,RA8875_VNDR1
+   306  0217  0600                  ld b,RA8875_VNDR1_VAL
+   307  0219  cd8b01                call ra8875_write_reg
+   308  021c  3e1d                  ld a,RA8875_VSTR0
+   309  021e  0616                  ld b,RA8875_VSTR0_VAL
+   310  0220  cd8b01                call ra8875_write_reg
+   311  0223  3e1e                  ld a,RA8875_VSTR1
+   312  0225  0600                  ld b,RA8875_VSTR1_VAL
+   313  0227  cd8b01                call ra8875_write_reg
+   314  022a  3e1f                  ld a,RA8875_VPWR
+   315  022c  0601                  ld b,RA8875_VPWR_VAL
+   316  022e  cd8b01                call ra8875_write_reg
+   317  0231  c1                    pop bc
+   318  0232  f1                    pop af
+   319  0233  c9                    ret
+   320                          
+   321                          ra8875_horizontal_active_window_init:
+   322  0234  f5                    push af
+   323  0235  c5                    push bc
+   324  0236  3e30                  ld a,RA8875_HSAW0
+   325  0238  0600                  ld b,RA8875_HSAW0_VAL
+   326  023a  cd8b01                call ra8875_write_reg
+   327  023d  3e31                  ld a,RA8875_HSAW1
+   328  023f  0600                  ld b,RA8875_HSAW1_VAL
+   329  0241  cd8b01                call ra8875_write_reg
+   330  0244  3e34                  ld a,RA8875_HEAW0
+   331  0246  061f                  ld b,RA8875_HEAW0_VAL
+   332  0248  cd8b01                call ra8875_write_reg
+   333  024b  3e35                  ld a,RA8875_HEAW1
+   334  024d  0603                  ld b,RA8875_HEAW1_VAL
+   335  024f  cd8b01                call ra8875_write_reg
+   336  0252  c1                    pop bc
+   337  0253  f1                    pop af
+   338  0254  c9                    ret
+   339                          
+   340                          ra8875_vertical_active_window_init:
+   341  0255  f5                    push af
+   342  0256  c5                    push bc
+   343  0257  3e32                  ld a,RA8875_VSAW0
+   344  0259  0600                  ld b,RA8875_VSAW0_VAL
+   345  025b  cd8b01                call ra8875_write_reg
+   346  025e  3e33                  ld a,RA8875_VSAW1
+   347  0260  0600                  ld b,RA8875_VSAW1_VAL
+   348  0262  cd8b01                call ra8875_write_reg
+   349  0265  3e36                  ld a,RA8875_VEAW0
+   350  0267  06df                  ld b,RA8875_VEAW0_VAL
+   351  0269  cd8b01                call ra8875_write_reg
+   352  026c  3e37                  ld a,RA8875_VEAW1
+   353  026e  0601                  ld b,RA8875_VEAW1_VAL
+   354  0270  cd8b01                call ra8875_write_reg
+   355  0273  c1                    pop bc
+   356  0274  f1                    pop af
+   357  0275  c9                    ret
+   358                          
+   359                          ra8875_clear_window:
+   360  0276  f5                    push af
+   361  0277  c5                    push bc
+   362  0278  3e8e                  ld a,RA8875_MCLR
+   363  027a  0680                  ld b,RA8875_MCLR_START | RA8875_MCLR_FULL
+   364  027c  cd8b01                call ra8875_write_reg
+   365                              ; wait for clear to complete
+   366                          _ra8875_clear_wait:
+   367  027f  cd8401                call ra8875_read_reg
+   368  0282  fe80                  cp RA8875_MCLR_READSTATUS
+   369  0284  28f9                  jr z,_ra8875_clear_wait
+   370  0286  c1                    pop bc
+   371  0287  f1                    pop af
+   372  0288  c9                    ret
+   373                          
+   374                          ra8875_display_on:
+   375  0289  f5                    push af
+   376  028a  c5                    push bc
+   377  028b  3e01                  ld a,RA8875_PWRR
+   378  028d  0680                  ld b,RA8875_PWRR_NORMAL | RA8875_PWRR_DISPON
+   379  028f  cd8b01                call ra8875_write_reg
+   380  0292  c1                    pop bc
+   381  0293  f1                    pop af
+   382  0294  c9                    ret
+   383                          
+   384                          ; GPIOX wired to enable TFT display
+   385                          ra8875_adafruit_tft_enable:
+   386  0295  f5                    push af
+   387  0296  c5                    push bc
+   388  0297  3ec7                  ld a,RA8875_GPIOX
+   389  0299  0601                  ld b,0x01
+   390  029b  cd8b01                call ra8875_write_reg
+   391  029e  c1                    pop bc
+   392  029f  f1                    pop af
+   393  02a0  c9                    ret
+   394                          
+   395                          ; PWM1 wired for backlight control
+   396                          ra8875_backlight_init:
+   397  02a1  f5                    push af
+   398  02a2  c5                    push bc
+   399  02a3  3e8a                  ld a,RA8875_P1CR
+   400  02a5  068a                  ld b,RA8875_P1CR_VAL
+   401  02a7  cd8b01                call ra8875_write_reg
+   402  02aa  3e8b                  ld a,RA8875_P1DCR
+   403  02ac  06ff                  ld b,0xff
+   404  02ae  cd8b01                call ra8875_write_reg
+   405  02b1  c1                    pop bc
+   406  02b2  f1                    pop af
+   407  02b3  c9                    ret
+   408                          
+   409                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   410                          ; top level RA8875 routines
+   411                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   412                          
+   413                          ra8875_initialise:
+   414  02b4  cdf700                call ra8875_reset
+   415  02b7  cd9501                call ra8875_reg_0_check
+   416  02ba  c0                    ret nz ; error
+   417                          
+   418  02bb  cd9d01                call ra8875_pllc1_init
+   419  02be  cd9501                call ra8875_reg_0_check
+   420  02c1  c0                    ret nz ; error
+   421                          
+   422  02c2  cdac01                call ra8875_pllc2_init
+   423  02c5  cd9501                call ra8875_reg_0_check
+   424  02c8  c0                    ret nz ; error
+   425                          
+   426  02c9  cdbb01                call ra8875_sysr_init
+   427                          
+   428  02cc  cdc701                call ra8875_pcsr_init
+   429  02cf  cd9501                call ra8875_reg_0_check
+   430  02d2  c0                    ret nz ; error
+   431                          
+   432  02d3  cdd601                call ra8875_horizontal_settings_init
+   433  02d6  cdfe01                call ra8875_vertical_settings_init
+   434  02d9  cd3402                call ra8875_horizontal_active_window_init
+   435  02dc  cd5502                call ra8875_vertical_active_window_init
+   436  02df  cd7602                call ra8875_clear_window
+   437                          
+   438  02e2  cd8902                call ra8875_display_on
+   439  02e5  cd9502                call ra8875_adafruit_tft_enable
+   440  02e8  cda102                call ra8875_backlight_init
+   441                          
+   442  02eb  bf                    cmp a ; clear error flag
+   443  02ec  c9                    ret
+   444                          
+   445                          ; TODO this could be simpler if we just need to initialise for text mode
+   446                          ra8875_text_mode:
+   447  02ed  f5                    push af
+   448                              ; Set text mode
+   449  02ee  3e40                  ld a,RA8875_MWCR0
+   450  02f0  cd4101                call ra8875_write_command
+   451  02f3  cd6f01                call ra8875_read_data
+   452  02f6  f680                  or RA8875_MWCR0_TXTMODE ; set text mode bit
+   453  02f8  cd5801                call ra8875_write_data
+   454                              ; Select the internal (ROM) font
+   455  02fb  3e21                  ld a,RA8875_FNCR0
+   456  02fd  cd4101                call ra8875_write_command
+   457  0300  cd6f01                call ra8875_read_data
+   458  0303  e65f                  and 0b01011111 ; Clear bits 7 and 5
+   459  0305  cd5801                call ra8875_write_data
+   460  0308  f1                    pop af
+   461  0309  c9                    ret
+   462                          
+   463                          ; TODO compress/rationalise this function and check it still works!
+   464                          ; A = blink rate (0-255)
+   465                          ra8875_cursor_blink:
+   466  030a  f5                    push af
+   467  030b  c5                    push bc
+   468  030c  47                    ld b,a ; stash blink rate in B
+   469  030d  3e40                  ld a,RA8875_MWCR0
+   470  030f  cd4101                call ra8875_write_command
+   471  0312  cd6f01                call ra8875_read_data
+   472  0315  f640                  or RA8875_MWCR0_CURSOR ; set cursor visible bit
+   473  0317  cd5801                call ra8875_write_data
+   474                          
+   475  031a  3e40                  ld a,RA8875_MWCR0
+   476  031c  cd4101                call ra8875_write_command
+   477  031f  cd6f01                call ra8875_read_data
+   478  0322  f620                  or RA8875_MWCR0_BLINK ; set blink bit
+   479  0324  cd5801                call ra8875_write_data
+   480                          
+   481  0327  3e44                  ld a,RA8875_BTCR
+   482  0329  cd4101                call ra8875_write_command
+   483  032c  78                    ld a,b ; restore blink rate
+   484  032d  cd5801                call ra8875_write_data
+   485  0330  c1                    pop bc
+   486  0331  f1                    pop af
+   487  0332  c9                    ret
+   488                          
+   489                          ; HL = x position
+   490                          ra8875_cursor_x:
+   491  0333  f5                    push af
+   492  0334  e5                    push hl
+   493  0335  3e2a                  ld a,RA8875_F_CURXL
+   494  0337  cd4101                call ra8875_write_command
+   495  033a  7d                    ld a,l
+   496  033b  cd5801                call ra8875_write_data
+   497  033e  3e2b                  ld a,RA8875_F_CURXH
+   498  0340  cd4101                call ra8875_write_command
+   499  0343  7c                    ld a,h
+   500  0344  cd5801                call ra8875_write_data
+   501  0347  e1                    pop hl
+   502  0348  f1                    pop af
+   503  0349  c9                    ret
+   504                          
+   505                          ; HL = y position
+   506                          ra8875_cursor_y:
+   507  034a  f5                    push af
+   508  034b  e5                    push hl
+   509  034c  3e2c                  ld a,RA8875_F_CURYL
+   510  034e  cd4101                call ra8875_write_command
+   511  0351  7d                    ld a,l
+   512  0352  cd5801                call ra8875_write_data
+   513  0355  3e2d                  ld a,RA8875_F_CURYH
+   514  0357  cd4101                call ra8875_write_command
+   515  035a  7c                    ld a,h
+   516  035b  cd5801                call ra8875_write_data
+   517  035e  e1                    pop hl
+   518  035f  f1                    pop af
+   519  0360  c9                    ret
+   520                          
+   521                          ra8875_memory_read_write_command:
+   522  0361  f5                    push af
+   523  0362  3e02                  ld a,RA8875_MRWC
+   524  0364  cd4101                call ra8875_write_command
+   525  0367  f1                    pop af
+   526  0368  c9                    ret
+   527                          
+   528                          ; A = character to write
+   529                          ra8875_putchar:
+   530  0369  f5                    push af
+   531  036a  c5                    push bc
+   532  036b  47                    ld b,a ; stash char in B
+   533  036c  3e02                  ld a,RA8875_MRWC
+   534  036e  cd4101                call ra8875_write_command
+   535  0371  78                    ld a,b ; restore char to A
+   536  0372  cd5801                call ra8875_write_data
+   537  0375  c1                    pop bc
+   538  0376  f1                    pop af
+   539  0377  c9                    ret
+   540                          
+   541                          ; HL = pointer to null-terminated string
+   542                          ; TODO could be improved by calling ra8875_write_data directly
+   543                          ra8875_puts:
+   544  0378  f5                    push af
+   545  0379  c5                    push bc
+   546                          _ra8875_puts_loop:
+   547  037a  7e                    ld a,(hl)
+   548  037b  fe00                  cp 0
+   549  037d  2806                  jr z,_ra8875_puts_done
+   550  037f  cd6903                call ra8875_putchar
+   551  0382  23                    inc hl
+   552  0383  18f5                  jr _ra8875_puts_loop
+   553                          _ra8875_puts_done:
+   554  0385  c1                    pop bc
+   555  0386  f1                    pop af
+   556  0387  c9                    ret
+   557                          
+beanboard.asm:
+     7                          
