@@ -1,13 +1,9 @@
 .DS_Store
+.vscode/*.*
+*/temp/*
 *.kicad_prl
 *.lck
 *-backups/
 *.bak
 fp-info-cache
 *#auto_saved_files#
-*.o
-*.map
-*.sym
-*.lis
-*.hex
-*.bin
