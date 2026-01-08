@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>2</version>
+  <attributes/>
+  <visualElements>
+    <visualElement>
+      <elementName>Clock</elementName>
+      <elementAttributes>
+        <entry>
+          <string>runRealTime</string>
+          <boolean>true</boolean>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>clk</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-620" y="-580"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>B</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-340" y="-540"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>Reset</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-860" y="-420"/>
+    </visualElement>
+    <visualElement>
+      <elementName>ScopeTrigger</elementName>
+      <elementAttributes/>
+      <pos x="-520" y="-680"/>
+    </visualElement>
+    <visualElement>
+      <elementName>7493.dig</elementName>
+      <elementAttributes/>
+      <pos x="-720" y="-460"/>
+    </visualElement>
+    <visualElement>
+      <elementName>VDD</elementName>
+      <elementAttributes/>
+      <pos x="-760" y="-320"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Ground</elementName>
+      <elementAttributes/>
+      <pos x="-560" y="-280"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>A</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-440" y="-600"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>C</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-240" y="-480"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>D</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-120" y="-420"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="-620" y="-580"/>
+      <p2 x="-540" y="-580"/>
+    </wire>
+    <wire>
+      <p1 x="-600" y="-260"/>
+      <p2 x="-360" y="-260"/>
+    </wire>
+    <wire>
+      <p1 x="-860" y="-420"/>
+      <p2 x="-760" y="-420"/>
+    </wire>
+    <wire>
+      <p1 x="-160" y="-420"/>
+      <p2 x="-120" y="-420"/>
+    </wire>
+    <wire>
+      <p1 x="-760" y="-420"/>
+      <p2 x="-720" y="-420"/>
+    </wire>
+    <wire>
+      <p1 x="-740" y="-520"/>
+      <p2 x="-580" y="-520"/>
+    </wire>
+    <wire>
+      <p1 x="-540" y="-680"/>
+      <p2 x="-520" y="-680"/>
+    </wire>
+    <wire>
+      <p1 x="-740" y="-460"/>
+      <p2 x="-720" y="-460"/>
+    </wire>
+    <wire>
+      <p1 x="-600" y="-460"/>
+      <p2 x="-540" y="-460"/>
+    </wire>
+    <wire>
+      <p1 x="-760" y="-300"/>
+      <p2 x="-720" y="-300"/>
+    </wire>
+    <wire>
+      <p1 x="-600" y="-300"/>
+      <p2 x="-560" y="-300"/>
+    </wire>
+    <wire>
+      <p1 x="-600" y="-340"/>
+      <p2 x="-160" y="-340"/>
+    </wire>
+    <wire>
+      <p1 x="-460" y="-600"/>
+      <p2 x="-440" y="-600"/>
+    </wire>
+    <wire>
+      <p1 x="-600" y="-220"/>
+      <p2 x="-260" y="-220"/>
+    </wire>
+    <wire>
+      <p1 x="-600" y="-380"/>
+      <p2 x="-580" y="-380"/>
+    </wire>
+    <wire>
+      <p1 x="-760" y="-380"/>
+      <p2 x="-720" y="-380"/>
+    </wire>
+    <wire>
+      <p1 x="-580" y="-380"/>
+      <p2 x="-460" y="-380"/>
+    </wire>
+    <wire>
+      <p1 x="-360" y="-540"/>
+      <p2 x="-340" y="-540"/>
+    </wire>
+    <wire>
+      <p1 x="-260" y="-480"/>
+      <p2 x="-240" y="-480"/>
+    </wire>
+    <wire>
+      <p1 x="-580" y="-520"/>
+      <p2 x="-580" y="-380"/>
+    </wire>
+    <wire>
+      <p1 x="-260" y="-480"/>
+      <p2 x="-260" y="-220"/>
+    </wire>
+    <wire>
+      <p1 x="-740" y="-520"/>
+      <p2 x="-740" y="-460"/>
+    </wire>
+    <wire>
+      <p1 x="-360" y="-540"/>
+      <p2 x="-360" y="-260"/>
+    </wire>
+    <wire>
+      <p1 x="-760" y="-320"/>
+      <p2 x="-760" y="-300"/>
+    </wire>
+    <wire>
+      <p1 x="-760" y="-420"/>
+      <p2 x="-760" y="-380"/>
+    </wire>
+    <wire>
+      <p1 x="-460" y="-600"/>
+      <p2 x="-460" y="-380"/>
+    </wire>
+    <wire>
+      <p1 x="-540" y="-680"/>
+      <p2 x="-540" y="-580"/>
+    </wire>
+    <wire>
+      <p1 x="-540" y="-580"/>
+      <p2 x="-540" y="-460"/>
+    </wire>
+    <wire>
+      <p1 x="-160" y="-420"/>
+      <p2 x="-160" y="-340"/>
+    </wire>
+    <wire>
+      <p1 x="-560" y="-300"/>
+      <p2 x="-560" y="-280"/>
+    </wire>
+  </wires>
+  <measurementOrdering>
+    <string>clk</string>
+    <string>A</string>
+    <string>B</string>
+    <string>C</string>
+    <string>D</string>
+    <string>Reset</string>
+  </measurementOrdering>
+</circuit>
