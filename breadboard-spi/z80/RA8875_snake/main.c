@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "ra8875.h"
-#include "../lib/marvin.h"
+#include "../libc/marvin.h"
 
 // function prototypes
 void splash(void);

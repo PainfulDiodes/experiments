@@ -6,5 +6,4 @@ restart=0x0010
 f=beanboard
 org=0x9000
 
-zcc +z80 -clib=classic main.c ra8875.asm ../lib/$f.asm -pragma-define:CRT_ORG_CODE=$org -pragma-define:CRT_ON_EXIT=$restart -create-app -m -Cz--ihex -o=output/$f.bin
-z88dk-dis -o $org -x output/$f.map -x ../../lib/$f.map output/$f.bin >output/$f.dis
+zcc +z80 -clib=classic main.c ra8875.asm ../libc/$f.asm -pragma-define:CRT_ORG_CODE=$org -pragma-define:CRT_ON_EXIT=$restart -create-app -m -Cz--ihex -o=output/$f.bin
