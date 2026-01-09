@@ -6,7 +6,7 @@
 
 [arduino/74LS165_test_0/](arduino/74LS165_test_0/)
 
-[kicad/74LS165_test_0/]](kicad/74LS165_test_0/)
+[kicad/74LS165_test_0/](kicad/74LS165_test_0/)
 
 ## Bit Counter
 
