@@ -1,0 +1,13 @@
+GPIO_IN                         = $0007 ; const, local, , beanboard, , ../lib/extra.asm:2
+GPIO_OUT                        = $0006 ; const, local, , beanboard, , ../lib/extra.asm:1
+ORGDEF                          = $8000 ; const, local, , beanboard, , beanboard.asm:0
+PROMPT                          = $00CF ; const, local, , beanboard, , ../lib/beanboard.asm:39
+__head                          = $8000 ; const, public, def, , ,
+__size                          = $002F ; const, public, def, , ,
+__tail                          = $802F ; const, public, def, , ,
+end                             = $8003 ; addr, local, , beanboard, , main.asm:4
+getchar                         = $0023 ; const, local, , beanboard, , ../lib/beanboard.asm:123
+gpio_echo                       = $8006 ; addr, local, , beanboard, , main.asm:8
+putchar                         = $0045 ; const, local, , beanboard, , ../lib/beanboard.asm:135
+putchar_hex                     = $01F4 ; const, local, , beanboard, , ../lib/beanboard.asm:136
+start                           = $8000 ; addr, local, , beanboard, , main.asm:1
