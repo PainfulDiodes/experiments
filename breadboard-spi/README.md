@@ -65,3 +65,5 @@
 ![kicad/SPI_beanboard_2/SPI_beanboard_2.png](kicad/SPI_beanboard_2/SPI_beanboard_2.png)
 
 [kicad/SPI_beanboard_2/](kicad/SPI_beanboard_2/)
+
+[digital/clock_divider.dig](digital/clock_divider.dig)
