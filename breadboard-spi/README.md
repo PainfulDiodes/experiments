@@ -12,6 +12,8 @@
 
 ## Bit Counter
 
+![kicad/74LS165_test_1/74LS165_test_1.png](kicad/74LS165_test_1/74LS165_test_1.png)
+
 [kicad/74LS165_test_1/](kicad/74LS165_test_1/)
 
 ## Digital Circuit Simulator
