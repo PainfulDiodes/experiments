@@ -36,7 +36,7 @@ Alternative design - JK flip-flops:
 
 ![spi_simplification_1_jk_dig](digital/spi_simplification_1_jk_dig.png)
 
-Alternative design: Binary counter - 74LS163: 
+Alternative design: Binary counter - 74LS163:
 
 ![spi_simplification_2_74163_dig](digital/spi_simplification_2_74163_dig.png)
 
