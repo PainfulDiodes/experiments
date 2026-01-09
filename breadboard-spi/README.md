@@ -55,3 +55,10 @@
 [kicad/SPI_nano/](kicad/SPI_nano/)
 
 [arduino/spi_test/](arduino/spi_test/)
+
+## Z80 loopback test
+
+![kicad/SPI_beanboard/SPI_beanboard.png](kicad/SPI_beanboard/SPI_beanboard.png)
+
+[z80/gpio_echo/](z80/gpio_echo/)
+
