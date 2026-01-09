@@ -71,3 +71,7 @@
 [digital/clock_divider.dig](digital/clock_divider.dig)
 
 [z80/beanboard_RA8875_hardware_SPI/](z80/beanboard_RA8875_hardware_SPI/)
+
+## Snake
+
+[z80/RA8875_snake/](z80/RA8875_snake/)
