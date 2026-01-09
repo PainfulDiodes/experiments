@@ -20,27 +20,19 @@
 
 [github.com/hneemann/Digital](https://github.com/hneemann/Digital)
 
-[digital/74165_test_0.dig](digital/74165_test_0.dig)
+[digital/](digital/)
 
-[digital/74165_test_1.dig](digital/74165_test_1.dig)
-
-## Simulated SPI solution
+### Simulated SPI solution
 
 ![digital/spi.dig](digital/spi_dig.png)
 
-[digital/spi.dig](digital/spi.dig)
-
-## Alternative design - JK flip-flops
+### Alternative design - JK flip-flops
 
 ![spi_simplification_1_jk_dig](digital/spi_simplification_1_jk_dig.png)
 
-[digital/spi_simplification_1_jk.dig](digital/spi_simplification_1_jk.dig)
-
-## Alternative design: Binary counter - 74LS163
+### Alternative design: Binary counter - 74LS163
 
 ![spi_simplification_2_74163_dig](digital/spi_simplification_2_74163_dig.png)
-
-[digital/spi_simplification_2_74163.dig](digital/spi_simplification_2_74163.dig)
 
 ## Loopback test
 
