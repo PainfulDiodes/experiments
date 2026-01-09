@@ -52,9 +52,11 @@
 
 ## Z80 loopback test
 
+[z80/gpio_echo/](z80/gpio_echo/)
+
+## RA8875 tests and debugging
+
 ![kicad/SPI_beanboard/SPI_beanboard.png](kicad/SPI_beanboard/SPI_beanboard.png)
 
 [kicad/SPI_beanboard/](kicad/SPI_beanboard/)
-
-[z80/gpio_echo/](z80/gpio_echo/)
 
