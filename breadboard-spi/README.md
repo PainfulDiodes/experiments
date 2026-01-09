@@ -4,6 +4,8 @@
 
 ![74LS165_test_0](images/74LS165_test_0.jpg)
 
+![kicad/74LS165_test_0/74LS165_test_0.png](kicad/74LS165_test_0/74LS165_test_0.png)
+
 [arduino/74LS165_test_0/](arduino/74LS165_test_0/)
 
 [kicad/74LS165_test_0/](kicad/74LS165_test_0/)
