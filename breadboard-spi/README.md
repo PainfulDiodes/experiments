@@ -67,3 +67,5 @@
 [kicad/SPI_beanboard_2/](kicad/SPI_beanboard_2/)
 
 [digital/clock_divider.dig](digital/clock_divider.dig)
+
+[z80/beanboard_RA8875_hardware_SPI/](z80/beanboard_RA8875_hardware_SPI/)
