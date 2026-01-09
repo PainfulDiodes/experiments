@@ -60,3 +60,8 @@
 
 [kicad/SPI_beanboard/](kicad/SPI_beanboard/)
 
+## Revised implementation
+
+![kicad/SPI_beanboard_2/SPI_beanboard_2.png](kicad/SPI_beanboard_2/SPI_beanboard_2.png)
+
+[kicad/SPI_beanboard_2/](kicad/SPI_beanboard_2/)
