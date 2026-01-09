@@ -54,5 +54,7 @@
 
 ![kicad/SPI_beanboard/SPI_beanboard.png](kicad/SPI_beanboard/SPI_beanboard.png)
 
+[kicad/SPI_beanboard/](kicad/SPI_beanboard/)
+
 [z80/gpio_echo/](z80/gpio_echo/)
 
