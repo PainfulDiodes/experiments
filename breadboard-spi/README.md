@@ -1,6 +1,6 @@
 # PainfulDiodes Experiment: Breadboard SPI Interface
 
-## PISO (parallel-in serial-out) shift-register - 74LS165
+## Parallel-in serial-out shift-register - 74LS165
 
 Test of 74LS165 on breadboard with an Arduino.
 
