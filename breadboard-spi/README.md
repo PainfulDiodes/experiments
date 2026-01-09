@@ -66,8 +66,6 @@ Test the SPI loopback with the BeanBoard Z80 computer.
 
 ## RA8875 tests and debugging
 
-Attept to interface the RA8875 TFT display controller via SPI using the breadboard SPI implementation. Debug and fix.
-
 ![kicad/SPI_beanboard/SPI_beanboard.png](kicad/SPI_beanboard/SPI_beanboard.png)
 
 [kicad/SPI_beanboard/](kicad/SPI_beanboard/)
