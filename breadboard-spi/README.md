@@ -1,5 +1,7 @@
 # PainfulDiodes Experiment: Breadboard SPI Interface
 
+Full details in accompanying blog post: [Hardware SPI Interface](https://painfuldiodes.wordpress.com/2026/01/09/hardware-spi-interface/)
+
 ## Parallel-in serial-out shift-register - 74LS165
 
 Test of 74LS165 on breadboard with an Arduino.
