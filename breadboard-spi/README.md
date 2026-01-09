@@ -1,6 +1,6 @@
 # PainfulDiodes Experiment: Breadboard SPI Interface
 
-Full details in accompanying blog post: [Hardware SPI Interface](https://painfuldiodes.wordpress.com/2026/01/09/hardware-spi-interface/)
+Full details in accompanying blog post: [Breadboard SPI Controller](https://painfuldiodes.wordpress.com/2026/01/09/breadboard-spi-controller/)
 
 ## Parallel-in serial-out shift-register - 74LS165
 
