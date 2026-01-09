@@ -34,11 +34,9 @@
 
 ![spi_simplification_2_74163_dig](digital/spi_simplification_2_74163_dig.png)
 
-## Loopback test
+### Loopback test
 
 ![spi_loopback_dig](digital/spi_loopback_dig.png)
-
-[digital/spi_loopback.dig](digital/spi_loopback.dig)
 
 ## Back to breadboard
 
