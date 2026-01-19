@@ -1,5 +1,7 @@
 # Beanboard SPI RA8875 TFT Experiment
 
+Beanboard connected to RA8875, bit-banged over GPIO.
+
 The main sample code is here: [/z80/asm/beanboard_RA8875](/beanboard-spi-ra8875-tft/z80/asm/beanboard_RA8875)
 
 Accompanying blog post: <https://painfuldiodes.wordpress.com/2025/10/24/tft-display-for-z80-homebrew/>
